@@ -1,11 +1,14 @@
 import {useEffect, useState} from "react";
 import axios from "axios";
-import { StyleSheet, Text, View, FlatList, Button, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, FlatList, Button, TouchableOpacity, ScrollView } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import * as Utils from '../utils/functions';
+import '../utils/global';
 import dayjs from 'dayjs';
 import * as React from "react";
 import Calendar from './Calendar';
+import SkateButton from './SkateButton';
+import { CheckBox } from '@rneui/themed';
 
 function Signup() {
 
@@ -22,8 +25,6 @@ function Signup() {
     const [loading, setLoading] = useState(true); // State for loading indicator
     const [error, setError] = useState(null); // State for error handling
     const [reload, setReload] = useState(false);
-
-    const [showPicker, setShowPicker] = useState(false);
 
     //const skaterToken = Utils.getCookie('skaterToken') ?? null;
     const skaterToken = "80|cURzcQnctqsJzaoHg0cyqrey3uT1bUf7kyL8r9vZ49775fac";
@@ -152,12 +153,12 @@ function Signup() {
         const passThisDay = false;
         let content;
         if (isOriginalRegistered(i) && now.isAfter(sessionTime)) {
-            content = <MaterialIcons name="check" style={styles.highlight} size={32} color="#1976d2" />
+            content = <MaterialIcons name="check" style={styles.darkColor} size={42} />
         } else if (sessions[i].count >= sessions[i].size || (accountData.balance < 0 && !passThisDay) || (!isRegistered(i) && now.isAfter(regSessionTime))) {
-            content = <MaterialIcons name="clear" style={styles.lightColor} size={32} color="#1976d2" />
+            content = <MaterialIcons name="clear" style={styles.lightColor} size={42} />
         } else {
             content = <TouchableOpacity onPress={() => clickedSkate(i)}>
-                            <MaterialIcons name="ice-skating" style={isRegistered(i) ? styles.darkColor : styles.lightColor } size={32} />
+                            <MaterialIcons name="ice-skating" style={isRegistered(i) ? styles.darkColor : styles.lightColor } size={42} />
                      </TouchableOpacity>
         }
 
@@ -196,64 +197,90 @@ function Signup() {
     }
 
     return (
-        <View>
-            <Text>{message}</Text>
-            <View>{pass ? <FontAwesome name="star" /> : null }</View>
-            <Text>{dayjs(signupDate).format('MMMM D, YYYY')}</Text>
-            <View>
+        <View style={styles.container}>
+            <View><MaterialIcons name="key" style={styles.green} size={32} /><Text style={styles.headerText}>Nick Riviera</Text></View>
+            <Text style={styles.headerText}>{dayjs(signupDate).format('MMMM D, YYYY')}</Text>
+            <ScrollView style={styles.sessionScroll}>
                 {sessions && sessions.map((item, index) => (
-                    <Text key={item.id}>{dayjs(item.session_time).format('h:mma')} to {dayjs(item.session_time).add(item.duration, 'minute').format('h:mma')} {item.name} ({item.size - item.count} of {item.size})
-                        {renderSkate(index)}</Text>
+                    <View style={styles.sessionRow} key={item.id}>
+                        <View style={styles.skateIcon}>{renderSkate(index)}</View>
+                        <Text style={styles.skateText}>{dayjs(item.session_time).format('h:mma')} to {dayjs(item.session_time).add(item.duration, 'minute').format('h:mma')} {item.name} ({item.size - item.count} of {item.size})</Text>
+                    </View>
                 ))}
-            </View>
-                <Button title="Signup" style={styles.signupButton} onClick={handleSignup} />
+            </ScrollView>
+            <SkateButton title="Signup" onPress={handleSignup} />
             <View>
-                <Text>Freestyles: {accountData.numFree}</Text><Text style={styles.highlight}>({accountData.numFreePass})</Text>
-                <Text>Classes: {accountData.numClasses}</Text>
-                <Text>Purchased: {accountData.adjustments}</Text>
-                <Text>Balance:</Text><Text style={ balance > 0 ? null : styles.error }>{balance}</Text>
+                <Text style={styles.accountText}>Freestyles: {accountData.numFree}({accountData.numFreePass}) |
+                Classes: {accountData.numClasses} | Purchased: {accountData.adjustments}</Text>
+                <Text style={ balance > 0 ? styles.accountText : [styles.error, styles.accountText] }>Balance: {balance}</Text>
             </View>
             <View>
-                <Button title="Select Date" onPress={() => { setShowPicker(!showPicker); console.log('showPicker ' + showPicker); }} />
-                <Calendar showPicker={showPicker} onUpdate={(value) => ChangeDate(value)} />
+                <Calendar onUpdate={(value) => ChangeDate(value)} />
             </View>
         </View>
     )
 }
 
-const DARK_COLOR = '#1B1DA8';
-const LIGHT_COLOR= '#969696';
-const HIGHLIGHT = '#FF8103';
-
     const styles = StyleSheet.create({
         container: {
             flex: 1,
-            marginTop: 50,
+            height: '100%',
+            marginVertical: 10,
+            marginHorizontal: 20,
+        },
+        sessionScroll: {
+            marginVertical: 5
+        },
+        sessionRow: {
+            flex: 1,
+            flexDirection: 'row',
+            alignItems: 'left'
+        },
+        skateIcon: {
+            width: 40,
+            height: 40,
+            alignItems: 'left'
+        },
+        skateText: {
+            fontSize: 16,
+            paddingTop:7,
+            marginTop:3,
+            marginHorizontal:5,
+            color: global.DARK_COLOR
         },
         item: {
-            backgroundColor: '#f9c2ff',
+            backgroundColor: global.BG_COLOR,
             padding: 20,
             marginVertical: 8,
-            marginHorizontal: 16,
+            marginHorizontal: 16
         },
         title: {
             fontSize: 32,
         },
         highlight: {
-            color: HIGHLIGHT
+            color: global.HIGHLIGHT
+        },
+        green: {
+            color: global.GREEN
         },
         error: {
-            color: '#F20202'
+            color: global.ERROR
         },
         darkColor: {
-            color: DARK_COLOR
+            color: global.DARK_COLOR
         },
         lightColor: {
-            color: LIGHT_COLOR
+            color: global.LIGHT_COLOR
         },
         signupButton: {
             color:'#FFFFFF',
-            backgroundColor: DARK_COLOR
+            backgroundColor: global.DARK_COLOR
+        },
+        accountText: {
+            textAlign: 'center'
+        },
+        headerText: {
+            fontSize: 16
         }
     });
 

@@ -66,9 +66,9 @@ function SummaryScreen() {
                   } else if (route.name === 'Summary') {
                       iconName = 'summarize';
                   }
-                    return <MaterialIcons name={iconName} size={30} color="#161da8" />
+                    return <MaterialIcons name={iconName} size={30} color={global.DARK_COLOR} />
                 },
-                tabBarActiveTintColor: '#e37405',
+                tabBarActiveTintColor: global.HIGHLIGHT,
                 tabBarInactiveTintColor: 'gray',
               })}
           >
@@ -84,9 +84,8 @@ function SummaryScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    padding:"0px 20px",
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: global.BG_COLOR,
     alignItems: 'center',
     justifyContent: 'center',
   },
