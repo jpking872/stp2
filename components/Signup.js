@@ -1,10 +1,11 @@
 import {useEffect, useState} from "react";
 import axios from "axios";
-import { StyleSheet, Text, View, FlatList, Button } from 'react-native';
-import { FontAwesome } from '@expo/vector-icons';
+import { StyleSheet, Text, View, FlatList, Button, TouchableOpacity } from 'react-native';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import * as Utils from '../utils/functions';
 import dayjs from 'dayjs';
 import * as React from "react";
+import Calendar from './Calendar';
 
 function Signup() {
 
@@ -22,21 +23,24 @@ function Signup() {
     const [error, setError] = useState(null); // State for error handling
     const [reload, setReload] = useState(false);
 
+    const [showPicker, setShowPicker] = useState(false);
+
     //const skaterToken = Utils.getCookie('skaterToken') ?? null;
     const skaterToken = "80|cURzcQnctqsJzaoHg0cyqrey3uT1bUf7kyL8r9vZ49775fac";
 
     useEffect(() => {
         const fetchSessions = async () => {
             try {
-                const response = await axios.get('http://192.168.1.199:7777/api/freestyle/get/' + signupDate, {
+                const response = await fetch('http://skateapi.kingjonathan.com/api/freestyle/get/' + signupDate, {
+                    method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
                         'Accept': 'application/json',
-                        Authorization: 'Bearer ' + skaterToken
+                        'Authorization': 'Bearer ' + skaterToken
                     }
                 }); // Replace with your API endpoint
-                console.log(response.data)
-                setSessions(response.data);
+                const data = await response.json();
+                setSessions(data);
             } catch (err) {
                 console.log(err);
                 setError(err);
@@ -45,21 +49,22 @@ function Signup() {
             }
         };
 
-        console.log('in sessions');
         fetchSessions();
 
         const fetchRegistered = async () => {
             try {
-                const response = await axios.get('http://192.168.1.199:7777/api/freestyle/skater/' + signupDate, {
+                const response = await fetch('http://skateapi.kingjonathan.com/api/freestyle/skater/' + signupDate, {
+                    method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
                         'Accept': 'application/json',
-                        Authorization: 'Bearer ' + skaterToken
+                        'Authorization': 'Bearer ' + skaterToken
                     }
                 }); // Replace with your API endpoint
-                setRegistered(response.data.freestyles);
-                setOriginalRegistered(response.data.freestyles);
-                setPass(response.data.pass);
+                const data = await response.json();
+                setRegistered(data.freestyles);
+                setOriginalRegistered(data.freestyles);
+                setPass(data.pass);
             } catch (err) {
                 setError(err);
             } finally {
@@ -71,15 +76,17 @@ function Signup() {
 
         const fetchAccountData = async () => {
             try {
-                const response = await axios.get('http://192.168.1.199:7777/api/summary/account', {
+                const response = await fetch('http://skateapi.kingjonathan.com/api/summary/account', {
+                    method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
                         'Accept': 'application/json',
-                        Authorization: 'Bearer ' + skaterToken
+                        'Authorization': 'Bearer ' + skaterToken
                     }
                 }); // Replace with your API endpoint
-                setAccountData(response.data);
-                setBalance(response.data.balance);
+                const data = await response.json();
+                setAccountData(data);
+                setBalance(data.balance);
             } catch (err) {
                 setError(err);
             } finally {
@@ -145,11 +152,13 @@ function Signup() {
         const passThisDay = false;
         let content;
         if (isOriginalRegistered(i) && now.isAfter(sessionTime)) {
-            content = <FontAwesome name="igloo" size={30} color="#000"/>
+            content = <MaterialIcons name="check" style={styles.highlight} size={32} color="#1976d2" />
         } else if (sessions[i].count >= sessions[i].size || (accountData.balance < 0 && !passThisDay) || (!isRegistered(i) && now.isAfter(regSessionTime))) {
-            content = <FontAwesome name="ice-cream" size={30} color="#000"/>
+            content = <MaterialIcons name="clear" style={styles.lightColor} size={32} color="#1976d2" />
         } else {
-            content = <FontAwesome name="person-skating" onClick={() => clickedSkate(i)}/>
+            content = <TouchableOpacity onPress={() => clickedSkate(i)}>
+                            <MaterialIcons name="ice-skating" style={isRegistered(i) ? styles.darkColor : styles.lightColor } size={32} />
+                     </TouchableOpacity>
         }
 
         return (
@@ -164,7 +173,7 @@ function Signup() {
         }
         setLoading(true);
         const response = async () => await axios.post(
-            'http://192.168.1.199/api/freestyle/signup', {
+            'http://skateapi.kingjonathan.com/api/freestyle/signup', {
                 sessionDate: signupDate,
                 signup: registered
             },
@@ -182,27 +191,39 @@ function Signup() {
     }
 
     function ChangeDate(curdate) {
+        console.log('change date ' + curdate);
         setSignupDate(curdate);
     }
 
     return (
         <View>
-        <Text>Signup Screen</Text>
-        </View>
-        /*<View>
             <Text>{message}</Text>
             <View>{pass ? <FontAwesome name="star" /> : null }</View>
             <Text>{dayjs(signupDate).format('MMMM D, YYYY')}</Text>
             <View>
-                {sessions.map((item, index) => (
+                {sessions && sessions.map((item, index) => (
                     <Text key={item.id}>{dayjs(item.session_time).format('h:mma')} to {dayjs(item.session_time).add(item.duration, 'minute').format('h:mma')} {item.name} ({item.size - item.count} of {item.size})
-                    </Text>
+                        {renderSkate(index)}</Text>
                 ))}
             </View>
-                <Button onClick={handleSignup}>Signup!</Button>
-        </View>*/
+                <Button title="Signup" style={styles.signupButton} onClick={handleSignup} />
+            <View>
+                <Text>Freestyles: {accountData.numFree}</Text><Text style={styles.highlight}>({accountData.numFreePass})</Text>
+                <Text>Classes: {accountData.numClasses}</Text>
+                <Text>Purchased: {accountData.adjustments}</Text>
+                <Text>Balance:</Text><Text style={ balance > 0 ? null : styles.error }>{balance}</Text>
+            </View>
+            <View>
+                <Button title="Select Date" onPress={() => { setShowPicker(!showPicker); console.log('showPicker ' + showPicker); }} />
+                <Calendar showPicker={showPicker} onUpdate={(value) => ChangeDate(value)} />
+            </View>
+        </View>
     )
 }
+
+const DARK_COLOR = '#1B1DA8';
+const LIGHT_COLOR= '#969696';
+const HIGHLIGHT = '#FF8103';
 
     const styles = StyleSheet.create({
         container: {
@@ -218,6 +239,22 @@ function Signup() {
         title: {
             fontSize: 32,
         },
+        highlight: {
+            color: HIGHLIGHT
+        },
+        error: {
+            color: '#F20202'
+        },
+        darkColor: {
+            color: DARK_COLOR
+        },
+        lightColor: {
+            color: LIGHT_COLOR
+        },
+        signupButton: {
+            color:'#FFFFFF',
+            backgroundColor: DARK_COLOR
+        }
     });
 
 export default Signup;

@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
-import { Ionicons, FontAwesome, AntDesign } from '@expo/vector-icons';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -58,17 +58,17 @@ function SummaryScreen() {
                   if (route.name === 'Home') {
                     iconName = 'home';
                   } else if (route.name === 'Skaters') {
-                    iconName = 'folder';
+                    iconName = 'air';
                   } else if (route.name === 'Signup') {
-                      iconName = 'envelope';
+                      iconName = 'ice-skating';
                   } else if (route.name === 'Classes') {
-                      iconName = 'book';
+                      iconName = 'bookmark';
                   } else if (route.name === 'Summary') {
-                      iconName = 'cloud';
+                      iconName = 'summarize';
                   }
-                  return <FontAwesome name={iconName} size={30} color="#000" />;
+                    return <MaterialIcons name={iconName} size={30} color="#161da8" />
                 },
-                tabBarActiveTintColor: 'tomato',
+                tabBarActiveTintColor: '#e37405',
                 tabBarInactiveTintColor: 'gray',
               })}
           >
@@ -84,6 +84,7 @@ function SummaryScreen() {
 
 const styles = StyleSheet.create({
   container: {
+    padding:"0px 20px",
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
