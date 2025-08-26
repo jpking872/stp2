@@ -56,7 +56,7 @@ function Login() {
             setLoading(true);
             try {
                 const response = await axios.post(
-                    'http://local.skateapi.com/api/login',{
+                    'http://skateapi.kingjonathan.com/api/login',{
 
                         email: email,
                         password: password
@@ -70,9 +70,11 @@ function Login() {
                 if (response.data.loggedin == true) {
                     setMessage("Welcome.");
                     setIsLoggedIn(true);
-                    Utils.setCookie('skaterToken', response.data.token, 7);
-                    onLogin();
-                    navigate('/signup');
+                    Utils.setStore('skaterToken', response.data.token);
+                    console.log(Utils.getStore('skaterToken'));
+                    setLoading(false);
+                    //onLogin();
+                    //navigate('/signup');
                 } else {
                     setMessage("Invalid login.");
                     setIsLoggedIn(false);
@@ -90,8 +92,8 @@ function Login() {
                 <Text style={styles.headerText}>Login</Text>
                 { message ? (<Text style={styles.item}>{message}</Text>) : null }
                 { validateError.length > 0 ? (<Text style={styles.item}>{validateError.join("\n")}</Text>) : null }
-                    <TextInput style={styles.item} label="Email" mode="outlined" onChangeText={handleEmailChange} value={email}/>
-                    <TextInput style={styles.item} label="Password" mode="outlined" onChangeText={handlePasswordChange} value={password} />
+                    <TextInput style={styles.item} label="Email" mode="outlined" onChangeText={setEmail} value={email}/>
+                    <TextInput style={styles.item} label="Password" mode="outlined" onChangeText={setPassword} value={password} secureTextEntry/>
                     <View style={styles.item}>
                         <SkateButton title="Login" color={global.DARK_COLOR} onPress={handleLogin} disabled={false} />
                     </View>

@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Skaters from './components/Skaters';
@@ -82,7 +82,11 @@ function SummaryScreen() {
             <Tab.Screen name="Classes" component={ClassesScreen} />
             <Tab.Screen name="Summary" component={SummaryScreen} />
           </Tab.Navigator>
+
+
         </NavigationContainer>
+
+
     );
   }
 

@@ -15,7 +15,7 @@ function Signup() {
     const currentDateTime = '2025-07-30 09:30:00';
     const [signupDate, setSignupDate] = useState(dayjs(currentDateTime).format('YYYY-MM-DD'));
 
-    const [sessions, setSessions] = useState(null); // State to store fetched data
+    const [sessions, setSessions] = useState([]); // State to store fetched data
     const [registered, setRegistered] = useState([]); // State to store fetched data
     const [originalRegistered, setOriginalRegistered] = useState([]); // State to store fetched data
     const [pass, setPass] = useState(false);
@@ -26,10 +26,13 @@ function Signup() {
     const [error, setError] = useState(null); // State for error handling
     const [reload, setReload] = useState(false);
 
-    //const skaterToken = Utils.getCookie('skaterToken') ?? null;
-    const skaterToken = "80|cURzcQnctqsJzaoHg0cyqrey3uT1bUf7kyL8r9vZ49775fac";
+    //const skaterToken = "80|cURzcQnctqsJzaoHg0cyqrey3uT1bUf7kyL8r9vZ49775fac";
 
     useEffect(() => {
+
+        const skaterToken = Utils.getStore('skaterToken');
+        console.log(skaterToken);
+
         const fetchSessions = async () => {
             try {
                 const response = await fetch('http://skateapi.kingjonathan.com/api/freestyle/get/' + signupDate, {
