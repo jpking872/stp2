@@ -212,14 +212,17 @@ function Signup() {
                 </View>
             </View>
             <ScrollView style={styles.sessionScroll}>
-                {sessions && sessions.map((item, index) => (
+                {sessions && sessions.length ? (
+                sessions.map((item, index) => (
                     <View style={[styles.sessionRow, index % 2 === 0 ? styles.even : styles.odd]} key={item.id}>
                         <View style={styles.skateIcon}>{renderSkate(index)}</View>
                         <Text style={styles.skateText}>{dayjs(item.session_time).format('h:mma')} to {dayjs(item.session_time).add(item.duration, 'minute').format('h:mma')}{'\n'}<Text style={styles.highlight}>{item.name}</Text> ({item.count} of {item.size})</Text>
                     </View>
-                ))}
+                ))) : (
+                    <View style={styles.indentText}><Text>No freestyles today</Text></View>
+                )}
             </ScrollView>
-            <SkateButton title={"Signup (" + registered.length + ")"} color={global.DARK_COLOR} onPress={handleSignup} />
+            <SkateButton title={"Signup (" + registered.length + ")"} color={global.DARK_COLOR} onPress={handleSignup} disabled={false}/>
             <View>
                 <Text style={styles.accountText}>Freestyles: {accountData.numFree}<Text style={styles.green }>({accountData.numFreePass})</Text><Text style={styles.highlight}> | </Text>Classes: {accountData.numClasses}<Text style={styles.highlight}> | </Text>Purchased: {accountData.adjustments}</Text>
                 <Text style={styles.accountText}>Balance: <Text style={ balance <= 0 ? styles.error: null }>{balance}</Text></Text>
@@ -236,7 +239,7 @@ function Signup() {
             flex: 1,
             height: '100%',
             marginVertical: 10,
-            marginHorizontal: 20,
+            marginHorizontal: 10,
         },
         sessionScroll: {
             marginVertical: 5
@@ -311,6 +314,10 @@ function Signup() {
         member: {
             paddingRight: 10,
             marginLeft: 'auto'
+        },
+        indentText: {
+            marginLeft: 10,
+            marginTop: 3
         }
     });
 

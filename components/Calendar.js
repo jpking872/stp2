@@ -3,6 +3,7 @@ import dayjs, {Dayjs} from 'dayjs';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { View, Button, Platform } from 'react-native';
 import SkateButton from './SkateButton';
+import '../utils/global';
 
 function Calendar({onUpdate}) {
 
@@ -11,7 +12,6 @@ function Calendar({onUpdate}) {
 
     const onChange = (event, selectedDate) => {
         const currentDate = selectedDate || date;
-        console.log('date selected ' + currentDate);
         const formattedDate = dayjs(currentDate).format('YYYY-MM-DD'); // Format the date
         setShowPicker(Platform.OS === 'ios');
         onUpdate(formattedDate);
@@ -27,6 +27,10 @@ function Calendar({onUpdate}) {
                         mode="date"
                         display="default"
                         onChange={onChange}
+                        themeVariant="light"
+                        accentColor={global.DARK_COLOR}
+                        textColor={global.DARK_COLOR}
+                        style={{ backgroundColor: "#DDDDDD"}}
                     />
                 )}
             </View>

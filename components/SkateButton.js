@@ -8,7 +8,7 @@ function SkateButton(props) {
 
     return (
         <View style={styles.container}>
-            <TouchableOpacity style={styles.button} onPress={props.onPress}>
+            <TouchableOpacity style={styles.button} onPress={props.onPress} disabled={props.disabled}>
                 <Text style={styles.text}>{props.title}</Text>
             </TouchableOpacity>
         </View>

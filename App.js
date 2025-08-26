@@ -1,4 +1,3 @@
-import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import React, { useEffect } from 'react';
@@ -9,13 +8,12 @@ import Signup from './components/Signup';
 import Classes from './components/Classes';
 import Summary  from './components/Summary';
 import Header from './components/Header';
+import Login from './components/Login';
 import './utils/global';
 
   function HomeScreen() {
     return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-          <Text>Home Screen</Text>
-        </View>
+        <Login />
     );
   }
 

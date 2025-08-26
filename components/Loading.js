@@ -1,20 +1,19 @@
 import React, {useState} from 'react';
-import { Text, StyleSheet, View } from 'react-native';
+import { Text, StyleSheet, View, ActivityIndicator } from 'react-native';
 import '../utils/global';
-import { ClipLoader } from 'react-spinners';
 
 function Loading() {
 
     return (
         <View style={styles.container}>
-            <ClipLoader size={50} />;
+            <ActivityIndicator size={50} color="#DDDDDD" style={{ marginTop: 50}} />
         </View>
     );
 }
-
     const styles = () => StyleSheet.create({
         container: {
-            alignItems:'center'
+            flex: 1,
+            justifyContent:'center'
         }
     });
 
