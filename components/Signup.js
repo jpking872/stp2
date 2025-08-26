@@ -8,7 +8,7 @@ import dayjs from 'dayjs';
 import * as React from "react";
 import Calendar from './Calendar';
 import SkateButton from './SkateButton';
-import { CheckBox } from '@rneui/themed';
+import Loading from './Loading';
 
 function Signup() {
 
@@ -102,7 +102,9 @@ function Signup() {
 
 
     if (loading) {
-        return <Text>Loading data...</Text>;
+        return (
+            <Loading />
+        );
     }
 
     if (error) {
@@ -153,12 +155,12 @@ function Signup() {
         const passThisDay = false;
         let content;
         if (isOriginalRegistered(i) && now.isAfter(sessionTime)) {
-            content = <MaterialIcons name="check" style={styles.darkColor} size={42} />
+            content = <MaterialIcons name="check" style={styles.darkColor} size={45} />
         } else if (sessions[i].count >= sessions[i].size || (accountData.balance < 0 && !passThisDay) || (!isRegistered(i) && now.isAfter(regSessionTime))) {
-            content = <MaterialIcons name="clear" style={styles.lightColor} size={42} />
+            content = <MaterialIcons name="clear" style={styles.lightColor} size={45} />
         } else {
             content = <TouchableOpacity onPress={() => clickedSkate(i)}>
-                            <MaterialIcons name="ice-skating" style={isRegistered(i) ? styles.darkColor : styles.lightColor } size={42} />
+                            <MaterialIcons name="ice-skating" style={isRegistered(i) ? styles.darkColor : styles.lightColor } size={45} />
                      </TouchableOpacity>
         }
 
@@ -192,27 +194,35 @@ function Signup() {
     }
 
     function ChangeDate(curdate) {
-        console.log('change date ' + curdate);
+        setReload(true);
+        setLoading(true);
         setSignupDate(curdate);
     }
 
     return (
         <View style={styles.container}>
-            <View><MaterialIcons name="key" style={styles.green} size={32} /><Text style={styles.headerText}>Nick Riviera</Text></View>
-            <Text style={styles.headerText}>{dayjs(signupDate).format('MMMM D, YYYY')}</Text>
+            <View style={styles.header}>{pass ? <MaterialIcons name="key" style={styles.green} size={32} /> : <MaterialIcons name="ice-skating" style={styles.darkColor} size={32} />}
+                <View style={styles.memberData}>
+                    <Text style={styles.headerText}>Nick Riviera</Text>
+                    <Text style={[styles.headerText, styles.member]}>Junior Freeskate</Text>
+                </View>
+                <View style={styles.memberData}>
+                    <Text style={[styles.headerText, styles.highlight]}>{dayjs(signupDate).format('MMMM D, YYYY')}</Text>
+                    <Text style={[styles.headerText, styles.member]}>Mar 2025</Text>
+                </View>
+            </View>
             <ScrollView style={styles.sessionScroll}>
                 {sessions && sessions.map((item, index) => (
-                    <View style={styles.sessionRow} key={item.id}>
+                    <View style={[styles.sessionRow, index % 2 === 0 ? styles.even : styles.odd]} key={item.id}>
                         <View style={styles.skateIcon}>{renderSkate(index)}</View>
-                        <Text style={styles.skateText}>{dayjs(item.session_time).format('h:mma')} to {dayjs(item.session_time).add(item.duration, 'minute').format('h:mma')} {item.name} ({item.size - item.count} of {item.size})</Text>
+                        <Text style={styles.skateText}>{dayjs(item.session_time).format('h:mma')} to {dayjs(item.session_time).add(item.duration, 'minute').format('h:mma')}{'\n'}<Text style={styles.highlight}>{item.name}</Text> ({item.count} of {item.size})</Text>
                     </View>
                 ))}
             </ScrollView>
-            <SkateButton title="Signup" onPress={handleSignup} />
+            <SkateButton title={"Signup (" + registered.length + ")"} color={global.DARK_COLOR} onPress={handleSignup} />
             <View>
-                <Text style={styles.accountText}>Freestyles: {accountData.numFree}({accountData.numFreePass}) |
-                Classes: {accountData.numClasses} | Purchased: {accountData.adjustments}</Text>
-                <Text style={ balance > 0 ? styles.accountText : [styles.error, styles.accountText] }>Balance: {balance}</Text>
+                <Text style={styles.accountText}>Freestyles: {accountData.numFree}<Text style={styles.green }>({accountData.numFreePass})</Text><Text style={styles.highlight}> | </Text>Classes: {accountData.numClasses}<Text style={styles.highlight}> | </Text>Purchased: {accountData.adjustments}</Text>
+                <Text style={styles.accountText}>Balance: <Text style={ balance <= 0 ? styles.error: null }>{balance}</Text></Text>
             </View>
             <View>
                 <Calendar onUpdate={(value) => ChangeDate(value)} />
@@ -234,7 +244,8 @@ function Signup() {
         sessionRow: {
             flex: 1,
             flexDirection: 'row',
-            alignItems: 'left'
+            alignItems: 'left',
+            marginVertical: 2
         },
         skateIcon: {
             width: 40,
@@ -243,9 +254,10 @@ function Signup() {
         },
         skateText: {
             fontSize: 16,
-            paddingTop:7,
-            marginTop:3,
-            marginHorizontal:5,
+            paddingTop:3,
+            paddingBottom:3,
+            marginLeft:10,
+            marginRight:5,
             color: global.DARK_COLOR
         },
         item: {
@@ -279,8 +291,26 @@ function Signup() {
         accountText: {
             textAlign: 'center'
         },
+        header: {
+            paddingLeft: 10,
+            paddingVertical: 3,
+            backgroundColor: "#DDDDDD"
+        },
         headerText: {
             fontSize: 16
+        },
+        odd: {
+            backgroundColor: "#DDDDDD"
+        },
+        even: {
+
+        },
+        memberData: {
+            flexDirection: 'row',
+        },
+        member: {
+            paddingRight: 10,
+            marginLeft: 'auto'
         }
     });
 

@@ -2,23 +2,25 @@ import React, {useState} from 'react';
 import { TouchableOpacity, Text, StyleSheet, View } from 'react-native';
 import '../utils/global';
 
-function SkateButton({title, onPress}) {
+function SkateButton(props) {
+
+    const styles = createStyles(props);
 
     return (
         <View style={styles.container}>
-            <TouchableOpacity style={styles.button} onPress={onPress}>
-                <Text style={styles.text}>{title}</Text>
+            <TouchableOpacity style={styles.button} onPress={props.onPress}>
+                <Text style={styles.text}>{props.title}</Text>
             </TouchableOpacity>
         </View>
     );
 }
 
-    const styles = StyleSheet.create({
+    const createStyles = (props) => StyleSheet.create({
         container: {
             alignItems:'center',
         },
         button: {
-            backgroundColor: global.DARK_COLOR,
+            backgroundColor: props.color,
             paddingVertical: 12,
             paddingHorizontal: 24,
             borderRadius: 8,

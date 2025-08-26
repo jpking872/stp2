@@ -1,14 +1,15 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Skaters from './components/Skaters';
 import Signup from './components/Signup';
 import Classes from './components/Classes';
 import Summary  from './components/Summary';
-import Calendar from './components/Calendar';
+import Header from './components/Header';
+import './utils/global';
 
   function HomeScreen() {
     return (
@@ -27,7 +28,9 @@ import Calendar from './components/Calendar';
   }
 
 function SignupScreen() {
-    return <Signup />;
+    return (
+            <Signup />
+    )
 }
 
 function ClassesScreen() {
@@ -49,8 +52,10 @@ function SummaryScreen() {
   const Tab = createBottomTabNavigator();
 
   export default function App() {
+
     return (
-        <NavigationContainer>
+        <NavigationContainer style={styles.container}>
+          <Header title="Skate to the Point" />
           <Tab.Navigator
               screenOptions={({ route }) => ({
                 tabBarIcon: ({ focused, color, size }) => {
@@ -70,6 +75,7 @@ function SummaryScreen() {
                 },
                 tabBarActiveTintColor: global.HIGHLIGHT,
                 tabBarInactiveTintColor: 'gray',
+                  headerShown: false
               })}
           >
             <Tab.Screen name="Home" component={HomeScreen} />
