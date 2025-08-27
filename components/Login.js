@@ -6,6 +6,7 @@ import axios from "axios";
 import { TextInput } from 'react-native-paper';
 import Loading from "./Loading";
 import SkateButton from "./SkateButton";
+import { useNavigation } from '@react-navigation/native';
 
 function Login() {
 
@@ -16,6 +17,7 @@ function Login() {
     const [error, setError] = useState(false); // State for loading indicator
     const [validateError, setValidateError] = useState([]);
     const [message, setMessage] = useState(null); // State for loading indicator
+    const navigation = useNavigation();
 
     if (loading) {
         return (
@@ -71,10 +73,7 @@ function Login() {
                     setMessage("Welcome.");
                     setIsLoggedIn(true);
                     Utils.setStore('skaterToken', response.data.token);
-                    console.log(Utils.getStore('skaterToken'));
                     setLoading(false);
-                    //onLogin();
-                    //navigate('/signup');
                 } else {
                     setMessage("Invalid login.");
                     setIsLoggedIn(false);
