@@ -3,7 +3,7 @@ import axios from "axios";
 import { StyleSheet, Text, View, FlatList, Button, TouchableOpacity, ScrollView } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import * as Utils from '../utils/functions';
-import '../utils/global';
+import * as Constants from '../utils/global';
 import dayjs from 'dayjs';
 import * as React from "react";
 import Calendar from './Calendar';
@@ -26,24 +26,23 @@ function Signup() {
     const [error, setError] = useState(null); // State for error handling
     const [reload, setReload] = useState(false);
 
-    //const skaterToken = "80|cURzcQnctqsJzaoHg0cyqrey3uT1bUf7kyL8r9vZ49775fac";
+    const skaterToken = Utils.getStore('skaterToken');
+    console.log("Signup:" + skaterToken);
 
     useEffect(() => {
 
-        const skaterToken = Utils.getStore('skaterToken');
-        console.log(skaterToken);
+        if (!skaterToken) return;
 
         const fetchSessions = async () => {
             try {
-                const response = await fetch('http://skateapi.kingjonathan.com/api/freestyle/get/' + signupDate, {
-                    method: 'GET',
+                const response = await axios.get(Constants.API_URL + '/api/freestyle/get/' + signupDate, {
                     headers: {
                         'Content-Type': 'application/json',
                         'Accept': 'application/json',
                         'Authorization': 'Bearer ' + skaterToken
                     }
                 }); // Replace with your API endpoint
-                const data = await response.json();
+                const data = response.data;
                 setSessions(data);
             } catch (err) {
                 console.log(err);
@@ -57,15 +56,14 @@ function Signup() {
 
         const fetchRegistered = async () => {
             try {
-                const response = await fetch('http://skateapi.kingjonathan.com/api/freestyle/skater/' + signupDate, {
-                    method: 'GET',
+                const response = await axios.get(Constants.API_URL + '/api/freestyle/skater/' + signupDate, {
                     headers: {
                         'Content-Type': 'application/json',
                         'Accept': 'application/json',
                         'Authorization': 'Bearer ' + skaterToken
                     }
                 }); // Replace with your API endpoint
-                const data = await response.json();
+                const data = response.data
                 setRegistered(data.freestyles);
                 setOriginalRegistered(data.freestyles);
                 setPass(data.pass);
@@ -80,15 +78,14 @@ function Signup() {
 
         const fetchAccountData = async () => {
             try {
-                const response = await fetch('http://skateapi.kingjonathan.com/api/summary/account', {
-                    method: 'GET',
+                const response = await axios.get(Constants.API_URL + '/api/summary/account', {
                     headers: {
                         'Content-Type': 'application/json',
                         'Accept': 'application/json',
                         'Authorization': 'Bearer ' + skaterToken
                     }
                 }); // Replace with your API endpoint
-                const data = await response.json();
+                const data = response.data;
                 setAccountData(data);
                 setBalance(data.balance);
             } catch (err) {
@@ -102,7 +99,6 @@ function Signup() {
         setReload(false);
 
     }, [signupDate, reload]);
-
 
     if (loading) {
         return (
@@ -178,20 +174,24 @@ function Signup() {
             return;
         }
         setLoading(true);
+        console.log('signing up:' + skaterToken);
         const response = async () => await axios.post(
-            'http://skateapi.kingjonathan.com/api/freestyle/signup', {
+            Constants.API_URL + '/api/freestyle/signup', {
                 sessionDate: signupDate,
                 signup: registered
             },
             {
                 headers: {
-                    Authorization: 'Bearer ' + skaterToken
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'Authorization': 'Bearer ' + skaterToken
                 }
             }
         ).then(response => {
+            console.log(response.data)
             setRegistered(response.data);
             setLoading(false);
-            setReload(true)
+            setReload(true);
         });
         response();
     }

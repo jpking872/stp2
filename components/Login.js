@@ -1,14 +1,17 @@
 import React, {useState, useEffect} from 'react';
 import { Text, StyleSheet, View, Linking } from 'react-native';
-import '../utils/global';
+import * as Constants  from '../utils/global';
 import * as Utils from '../utils/functions';
 import axios from "axios";
 import { TextInput } from 'react-native-paper';
 import Loading from "./Loading";
 import SkateButton from "./SkateButton";
+import SkateLink from "./SkateLink";
 import { useNavigation } from '@react-navigation/native';
-
+import { AuthProvider, useAuth } from '../context/AuthContext';
 function Login() {
+
+    const { isAuthenticated, login } = useAuth();
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -58,14 +61,15 @@ function Login() {
             setLoading(true);
             try {
                 const response = await axios.post(
-                    'http://skateapi.kingjonathan.com/api/login',{
+                    Constants.API_URL + '/api/login',{
 
                         email: email,
                         password: password
                     },
                     {
                         headers: {
-                            'Content-type': 'application/json'
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json',
                         }
                     }
                 );
@@ -73,7 +77,9 @@ function Login() {
                     setMessage("Welcome.");
                     setIsLoggedIn(true);
                     Utils.setStore('skaterToken', response.data.token);
+                    login();
                     setLoading(false);
+
                 } else {
                     setMessage("Invalid login.");
                     setIsLoggedIn(false);
@@ -97,7 +103,7 @@ function Login() {
                         <SkateButton title="Login" color={global.DARK_COLOR} onPress={handleLogin} disabled={false} />
                     </View>
                     <Text style={styles.item}>Forgot password?</Text>
-                    <Text style={styles.item}>Create an account</Text>
+                    <SkateLink title="Create an account" destination="Register" />
             </View>
         )
 

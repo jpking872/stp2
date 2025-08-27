@@ -8,7 +8,7 @@ import ClassesScreen from '../screens/ClassesScreen';
 import SummaryScreen from '../screens/SummaryScreen';
 
 const Tab = createBottomTabNavigator();
-function PublicStack() {
+function PrivateStack() {
     return (
     <Tab.Navigator
         screenOptions={({ route }) => ({
@@ -40,4 +40,4 @@ function PublicStack() {
     );
 }
 
-export default PublicStack;
+export default PrivateStack;

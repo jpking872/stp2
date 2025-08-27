@@ -20,7 +20,7 @@ function Calendar({onUpdate}) {
 
     return (
             <View>
-                <SkateButton title="Choose Date" color={global.HIGHLIGHT} onPress={() => setShowPicker(true)} />
+                <SkateButton title="Choose Date" color={global.DARK_COLOR} onPress={() => setShowPicker(true)} />
                 {showPicker && (
                     <DateTimePicker
                         value={date}

@@ -14,7 +14,7 @@ function Header({title}) {
 
 const styles = StyleSheet.create({
     container: {
-        height: 80,
+        height: 82,
         margin: 0,
         padding: 0,
         alignItems: 'center',
@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     },
     headerImage: {
         maxWidth: 360,
-        height: 80
+        height: 82
     },
     headerText: {
         fontSize:24,
