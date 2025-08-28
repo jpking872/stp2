@@ -1,7 +1,8 @@
 {
   "expo": {
-    "name": "skatepoint2",
-    "slug": "skatepoint2",
+    "name": "Skate to the Point",
+    "slug": "skatetothepoint",
+    "description": "Freestyle Skating Registration App",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",

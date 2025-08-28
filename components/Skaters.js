@@ -9,6 +9,7 @@ import { StyleSheet, Text, View, FlatList, Button, TouchableOpacity, ScrollView 
 import SkateButton from './SkateButton';
 import Loading from './Loading';
 import { DataTable } from 'react-native-paper';
+import Profile from "./Profile";
 
 function Skaters() {
 
@@ -141,14 +142,26 @@ function Skaters() {
 
     return (
 
-        <>
+        <View style={styles.container}>
+            <Profile pass={false} date={signupDate}/>
             <SkaterTable />
             <ClassTable />
-            <Calendar onUpdate={(value) => ChangeDate(value)} />
-        </>
+            <View>
+                <Calendar onUpdate={(value) => ChangeDate(value)} />
+            </View>
+        </View>
 
     )
 
 }
+
+const styles = StyleSheet.create({
+        container: {
+            flex: 1,
+            height: '100%',
+            marginVertical: 10,
+            marginHorizontal: 10,
+        }
+})
 
 export default Skaters;

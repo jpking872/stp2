@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import {useEffect, useState, useRef} from "react";
 import axios from "axios";
 import { StyleSheet, Text, View, FlatList, Button, TouchableOpacity, ScrollView } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -9,6 +9,7 @@ import * as React from "react";
 import Calendar from './Calendar';
 import SkateButton from './SkateButton';
 import Loading from './Loading';
+import Profile from './Profile';
 
 function Signup() {
 
@@ -25,6 +26,8 @@ function Signup() {
     const [loading, setLoading] = useState(true); // State for loading indicator
     const [error, setError] = useState(null); // State for error handling
     const [reload, setReload] = useState(false);
+    const availableSessions = useRef(0);
+    availableSessions.count = 0;
 
     const skaterToken = Utils.getStore('skaterToken');
     console.log("Signup:" + skaterToken);
@@ -158,6 +161,7 @@ function Signup() {
         } else if (sessions[i].count >= sessions[i].size || (accountData.balance < 0 && !passThisDay) || (!isRegistered(i) && now.isAfter(regSessionTime))) {
             content = <MaterialIcons name="clear" style={styles.lightColor} size={45} />
         } else {
+            availableSessions.count += 1;
             content = <TouchableOpacity onPress={() => clickedSkate(i)}>
                             <MaterialIcons name="ice-skating" style={isRegistered(i) ? styles.darkColor : styles.lightColor } size={45} />
                      </TouchableOpacity>
@@ -192,6 +196,7 @@ function Signup() {
             setRegistered(response.data);
             setLoading(false);
             setReload(true);
+            navigation.navigate("Skaters")
         });
         response();
     }
@@ -204,16 +209,7 @@ function Signup() {
 
     return (
         <View style={styles.container}>
-            <View style={styles.header}>{pass ? <MaterialIcons name="key" style={styles.green} size={32} /> : <MaterialIcons name="ice-skating" style={styles.darkColor} size={32} />}
-                <View style={styles.memberData}>
-                    <Text style={styles.headerText}>Nick Riviera</Text>
-                    <Text style={[styles.headerText, styles.member]}>Junior Freeskate</Text>
-                </View>
-                <View style={styles.memberData}>
-                    <Text style={[styles.headerText, styles.highlight]}>{dayjs(signupDate).format('MMMM D, YYYY')}</Text>
-                    <Text style={[styles.headerText, styles.member]}>Mar 2025</Text>
-                </View>
-            </View>
+            <Profile pass={false} date={signupDate}/>
             <ScrollView style={styles.sessionScroll}>
                 {sessions && sessions.length ? (
                 sessions.map((item, index) => (
@@ -225,7 +221,7 @@ function Signup() {
                     <View style={styles.indentText}><Text>No freestyles today</Text></View>
                 )}
             </ScrollView>
-            <SkateButton title={"Signup (" + registered.length + ")"} color={global.DARK_COLOR} onPress={handleSignup} disabled={false}/>
+            <SkateButton title={"Signup (" + registered.length + ")"} color={global.DARK_COLOR} onPress={handleSignup} disabled={ availableSessions.count == 0}/>
             <View>
                 <Text style={styles.accountText}>Freestyles: {accountData.numFree}<Text style={styles.green }>({accountData.numFreePass})</Text><Text style={styles.highlight}> | </Text>Classes: {accountData.numClasses}<Text style={styles.highlight}> | </Text>Purchased: {accountData.adjustments}</Text>
                 <Text style={styles.accountText}>Balance: <Text style={ balance <= 0 ? styles.error: null }>{balance}</Text></Text>
@@ -297,26 +293,8 @@ function Signup() {
         accountText: {
             textAlign: 'center'
         },
-        header: {
-            paddingLeft: 10,
-            paddingVertical: 3,
-            backgroundColor: "#DDDDDD"
-        },
-        headerText: {
-            fontSize: 16
-        },
         odd: {
             backgroundColor: "#DDDDDD"
-        },
-        even: {
-
-        },
-        memberData: {
-            flexDirection: 'row',
-        },
-        member: {
-            paddingRight: 10,
-            marginLeft: 'auto'
         },
         indentText: {
             marginLeft: 10,

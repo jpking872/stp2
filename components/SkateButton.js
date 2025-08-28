@@ -20,7 +20,7 @@ function SkateButton(props) {
             alignItems:'center',
         },
         button: {
-            backgroundColor: props.color,
+            backgroundColor: props.disabled ? '#DDDDDD' : props.color,
             paddingVertical: 12,
             paddingHorizontal: 24,
             borderRadius: 8,
@@ -28,7 +28,6 @@ function SkateButton(props) {
             maxWidth: 360,
             width:'100%',
             marginHorizontal: 20
-
         },
         text: {
             color: '#fff',
