@@ -100,6 +100,7 @@ function Summary() {
                         'Authorization': 'Bearer ' + skaterToken
                     }
                 }); // Replace with your API endpoint
+                console.log(response.data)
                 setHistory(response.data);
             } catch (err) {
                 setError(err);
@@ -219,7 +220,7 @@ function Summary() {
             { history && history.length ? (
                 history.map((h, index) => (
                     <View key={index} style={styles.summaryRow}>
-                        <Text style={styles.historyDate}>{dayjs(h.month + "/1/" + h.year).format('MMM YYYY')}</Text>
+                        <Text style={styles.historyDate}>{dayjs(h.year + "-" + h.month + "-01").format('MMM YYYY')}</Text>
                         <Text style={ styles.historyNumber }>{h.freestyles}-{h.freestyles_pass}</Text>
                         <Text style={ styles.historyNumber }>{h.classes}</Text>
                         <Text style={ styles.historyNumber }>{h.passes}</Text>
