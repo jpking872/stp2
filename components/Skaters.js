@@ -94,22 +94,23 @@ function Skaters() {
     function SkaterTable() {
         return (
             <View>
-                <Text>Freestyles { dayjs(signupDate).format("MMMM D, YYYY") }</Text>
-                <Text>{ sessions }</Text>
-                <DataTable>
-                    <DataTable.Header>
-                        <DataTable.Title>Skater</DataTable.Title>
-                        <DataTable.Title>Session</DataTable.Title>
-                    </DataTable.Header>
-
-                    { skaters.map((skater) => (
-                        <DataTable.Row key={skater.id}>
-                            <DataTable.Cell>{skater.skater}</DataTable.Cell>
-                            <DataTable.Cell>{skater.sessions}</DataTable.Cell>
-                        </DataTable.Row>
-                    ))}
-
-                </DataTable>
+                <View style={styles.tableHeader}>
+                    <Text>Freestyles</Text>
+                    <Text style={styles.darkColor}>{ sessions }</Text>
+                </View>
+                <View style={[styles.skaterRow, styles.odd]}>
+                    <Text style={styles.skaterName}>Skater</Text>
+                    <Text style={styles.skaterSessions}>Sessions</Text>
+                </View>
+                {skaters && skaters.length ? (
+                    skaters.map((skater, index) => (
+                        <View style={[styles.skaterRow, index % 2 === 0 ? styles.even : styles.odd]} key={skater.id}>
+                            <Text style={styles.skaterName}>{skater.skater}</Text>
+                            <Text style={styles.skaterSessions}>{skater.sessions}</Text>
+                        </View>
+                    ))) : (
+                    <View style={styles.indentText}><Text>No skaters today</Text></View>
+                )}
             </View>
         );
     }
@@ -117,21 +118,16 @@ function Skaters() {
     function ClassTable() {
         return (
             <View>
-                <Text>Classes</Text>
-                <DataTable>
-                    <DataTable.Header>
-                        <DataTable.Title>Class</DataTable.Title>
-                        <DataTable.Title>Participants</DataTable.Title>
-                    </DataTable.Header>
-
-                    { classes.map((c) => (
-                        <DataTable.Row key={c.id}>
-                            <DataTable.Cell>{ c.title } {dayjs(c.start).format('h:mma')} - {dayjs(c.start).add(c.duration, 'minute').format('h:mma')}</DataTable.Cell>
-                            <DataTable.Cell>{c.participants}</DataTable.Cell>
-                        </DataTable.Row>
-                    ))}
-
-                </DataTable>
+                <View style={styles.tableHeader}>
+                    <Text>Classes</Text>
+                </View>
+                { classes &&
+                    classes.map((c, index) => (
+                    <View key={c.id} style={[styles.classRow, index % 2 === 0 ? styles.odd: null]}>
+                        <Text style={styles.classTitle}>{ c.title } {dayjs(c.start).format('h:mma')} - {dayjs(c.start).add(c.duration, 'minute').format('h:mma')}</Text>
+                        <Text style={styles.classParticipants}>{c.participants.length > 0 ? c.participants : "No skaters"}</Text>
+                    </View>
+                ))}
             </View>
         );
     }
@@ -144,8 +140,10 @@ function Skaters() {
 
         <View style={styles.container}>
             <Profile pass={false} date={signupDate}/>
-            <SkaterTable />
-            <ClassTable />
+            <ScrollView>
+                <SkaterTable />
+                <ClassTable />
+            </ScrollView>
             <View>
                 <Calendar onUpdate={(value) => ChangeDate(value)} />
             </View>
@@ -156,12 +154,61 @@ function Skaters() {
 }
 
 const styles = StyleSheet.create({
-        container: {
-            flex: 1,
-            height: '100%',
-            marginVertical: 10,
-            marginHorizontal: 10,
-        }
+    container: {
+        flex: 1,
+        height: '100%',
+        marginVertical: 10,
+        marginHorizontal: 10,
+    },
+    skaterRow: {
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'left',
+        marginVertical: 0,
+        paddingVertical:3
+    },
+    skaterName: {
+        width: '30%',
+        paddingLeft: 5
+
+    },
+    skaterSessions: {
+        width: '70%',
+        fontSize: 14,
+        marginLeft:5,
+        marginRight:5,
+        color: global.DARK_COLOR
+    },
+    odd: {
+        backgroundColor: "#DDDDDD"
+    },
+    indentText: {
+        marginLeft: 10,
+        marginTop: 3
+    },
+    tableHeader: {
+        marginVertical: 5,
+        paddingHorizontal: 5,
+        paddingVertical: 3,
+        backgroundColor: "#DDDDDD",
+    },
+    darkColor: {
+        color: global.DARK_COLOR
+    },
+    highlight: {
+        color: global.HIGHLIGHT
+    },
+    classRow: {
+        marginVertical: 0,
+        paddingVertical: 3
+    },
+    classTitle: {
+        paddingHorizontal: 5
+    },
+    classParticipants: {
+        paddingHorizontal: 5,
+        color: global.DARK_COLOR
+    }
 })
 
 export default Skaters;

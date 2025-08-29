@@ -5,7 +5,7 @@ function Header({title}) {
 
     return (
             <View style={styles.container}>
-                <Image source={require('../assets/appHeader.png')} style={styles.headerImage} />
+                <Image source={require('../assets/appHeader.jpg')} style={styles.headerImage} />
             </View>
     )
 
@@ -14,7 +14,7 @@ function Header({title}) {
 
 const styles = StyleSheet.create({
     container: {
-        height: 82,
+        height: 85,
         margin: 0,
         padding: 0,
         alignItems: 'center',
@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     },
     headerImage: {
         maxWidth: 360,
-        height: 82
+        height: 85
     },
     headerText: {
         fontSize:24,

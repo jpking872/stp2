@@ -196,7 +196,6 @@ function Signup() {
             setRegistered(response.data);
             setLoading(false);
             setReload(true);
-            navigation.navigate("Skaters")
         });
         response();
     }
