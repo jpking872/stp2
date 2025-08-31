@@ -141,7 +141,7 @@ function Summary() {
         return (
             <View>
                 <View style={styles.tableHeader}>
-                    <Text style={styles.indentText}>Freestyles</Text>
+                    <Text style={styles.centerText}>Freestyles</Text>
                 </View>
             { freestyles && freestyles.length ? (
                 freestyles.map((freestyle, index) => (
@@ -151,7 +151,7 @@ function Summary() {
                         <Text style={ freestyle.freestylePass === 1 ? [styles.summaryNumber, styles.green] : styles.summaryNumber }>{freestyle.numSessions}</Text>
                     </View>
             ))): (
-                <Text style={styles.indentText}>No freestyles</Text>
+                <Text style={styles.centerText}>No freestyles</Text>
                 )}
             </View>
         );
@@ -163,7 +163,7 @@ function Summary() {
         return (
             <View>
                 <View style={styles.tableHeader}>
-                    <Text style={styles.indentText}>Classes</Text>
+                    <Text style={styles.centerText}>Classes</Text>
                 </View>
                 { classes && classes.length ? (
                     classes.map((c, index) => (
@@ -172,7 +172,7 @@ function Summary() {
                             <Text style={styles.summaryClass}>{c.classTitle}</Text>
                         </View>
                     ))): (
-                    <View style={styles.indentText}><Text>No classes</Text></View>
+                    <Text style={styles.centerText}>No classes</Text>
                 )}
             </View>
         );
@@ -184,7 +184,7 @@ function Summary() {
         return (
             <View>
                 <View style={styles.tableHeader}>
-                    <Text style={styles.indentText}>Adjustments</Text>
+                    <Text style={styles.centerText}>Adjustments</Text>
                 </View>
                 { adjustments && adjustments.length ? (
                     adjustments.map((adjustment, index) => (
@@ -194,7 +194,7 @@ function Summary() {
                             <Text style={ styles.summaryNumber }>{adjustment.points}</Text>
                         </View>
                     ))): (
-                    <Text style={styles.indentText}>No adjustments</Text>
+                    <Text style={styles.centerText}>No adjustments</Text>
                 )}
             </View>
         );
@@ -207,7 +207,7 @@ function Summary() {
 
         <View>
             <View style={styles.tableHeader}>
-                <Text style={styles.indentText}>History</Text>
+                <Text style={styles.centerText}>History</Text>
             </View>
             <View style={[styles.summaryRow, styles.odd]}>
                 <Text style={styles.historyDate}> </Text>
@@ -228,7 +228,7 @@ function Summary() {
                         <Text style={ styles.historyNumber }>{h.amount}</Text>
                     </View>
                 ))): (
-                <Text style={styles.indentText}>No history</Text>
+                <Text style={styles.centerText}>No history</Text>
             )}
         </View>
 
@@ -310,8 +310,8 @@ const styles = StyleSheet.create({
     odd: {
         backgroundColor: "#DDDDDD"
     },
-    indentText: {
-        marginLeft: 5,
+    centerText: {
+        textAlign: 'center'
     },
     tableHeader: {
         marginVertical: 5,

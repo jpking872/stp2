@@ -5,7 +5,7 @@ function Header({title}) {
 
     return (
             <View style={styles.container}>
-                <Image source={require('../assets/appHeader.jpg')} style={styles.headerImage} />
+                <Image source={require('../assets/appHeader.png')} style={styles.headerImage} />
             </View>
     )
 

@@ -19,7 +19,7 @@
     "@rneui/themed": "^4.0.0-rc.8",
     "axios": "^1.11.0",
     "dayjs": "^1.11.13",
-    "expo": "~53.0.20",
+    "expo": "53.0.22",
     "expo-secure-store": "~14.2.4",
     "expo-status-bar": "~2.2.3",
     "react": "19.0.0",
