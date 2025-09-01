@@ -15,11 +15,18 @@ function HomeScreen() {
         navigation.navigate("Login");
     }
 
+    function gotoRegister() {
+        navigation.navigate("Register");
+    }
+
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <Image source={require('../assets/icon.png')} style={styles.headerImage} />
             { isAuthenticated ? null : (
-                <SkateButton title="Sign in" color={global.DARK_COLOR} onPress={gotoLogin} disabled={false}/>
+                <View>
+                    <View style={{ marginBottom: 15 }}><SkateButton title="Sign in" color={global.DARK_COLOR} onPress={gotoLogin} disabled={false} /></View>
+                    <View><SkateButton title="Create account" color={global.DARK_COLOR} onPress={gotoRegister} disabled={false} /></View>
+                </View>
             )}
         </View>
     );

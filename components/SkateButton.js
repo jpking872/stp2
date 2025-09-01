@@ -17,7 +17,7 @@ function SkateButton(props) {
 
     const createStyles = (props) => StyleSheet.create({
         container: {
-            alignItems:'center',
+            alignItems:'center'
         },
         button: {
             backgroundColor: props.disabled ? '#DDDDDD' : props.color,

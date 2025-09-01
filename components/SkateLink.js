@@ -14,10 +14,12 @@ function SkateLink(props) {
     );
 }
 
-    const styles = () => StyleSheet.create({
+    const styles= StyleSheet.create({
         text: {
             color: global.DARK_COLOR,
-            textDecorationLine: 'underline'
+            textDecorationLine: 'underline',
+            marginBottom: 10,
+            fontSize: 16
         },
     });
 

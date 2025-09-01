@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from 'react';
 import { Text, StyleSheet, View, Linking } from 'react-native';
+import React, { useState, useEffect } from 'react';
 import * as Constants  from '../utils/global';
 import * as Utils from '../utils/functions';
 import axios from "axios";
@@ -8,19 +8,30 @@ import Loading from "./Loading";
 import SkateButton from "./SkateButton";
 import SkateLink from "./SkateLink";
 import { useNavigation } from '@react-navigation/native';
-import { AuthProvider, useAuth } from '../context/AuthContext';
-function Login() {
+function ResetPassword() {
 
-    const { isAuthenticated, login } = useAuth();
+    const navigation = useNavigation();
 
-    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [passwordConf, setPasswordConf] = useState('');
     const [loading, setLoading] = useState(false); // State for loading indicator
     const [error, setError] = useState(false); // State for loading indicator
     const [validateError, setValidateError] = useState([]);
-    const [message, setMessage] = useState(null); // State for loading indicator
-    const navigation = useNavigation();
+    const [message, setMessage] = useState("");
+
+    useEffect(() => {
+        const handleDeepLink = (event) => {
+            const url = event.url;
+            const queryParams = new URL(url).searchParams;
+            const email = queryParams.get('email');
+            const token = queryParams.get('token');
+            console.log('email: ' + email + ' token: ' + token);
+        };
+
+        const subscription = Linking.addEventListener('url', handleDeepLink);
+        return () => subscription.remove();
+
+    }, []);
 
     if (loading) {
         return (
@@ -34,29 +45,29 @@ function Login() {
 
     const validate = () => {
         const newErrors = [];
-        if (!email) {
-            newErrors.push('Email is required');
-        } else if (!/\S+@\S+\.\S+/.test(email)) {
-            newErrors.push('Email address is invalid');
-        }
         if (!password) {
             newErrors.push('Password is required');
         } else if (password.length < 8 || password.length > 15)  {
             newErrors.push('Password must be at least 8 characters and less than 15 characters');
         }
+        if (password !== passwordConf) {
+            newErrors.push('Confirmed password doesn\'t match');
+        }
         setValidateError(newErrors)
         return newErrors.length === 0; // Return true if no errors
     };
 
-    const handleLogin = async () => {
+    const handleReset = async () => {
         if (validate()) {
             setLoading(true);
             try {
                 const response = await axios.post(
-                    Constants.API_URL + '/api/login',{
+                    Constants.API_URL + '/api/reset-password',{
 
                         email: email,
-                        password: password
+                        token: token,
+                        password: password,
+                        password_confirmation: passwordConf
                     },
                     {
                         headers: {
@@ -65,16 +76,11 @@ function Login() {
                         }
                     }
                 );
-                if (response.data.loggedin == true) {
+                if (response.data.message === 'Password reset successfully!') {
                     setMessage("Welcome.");
-                    setIsLoggedIn(true);
-                    Utils.setStore('skaterToken', response.data.token);
-                    login();
-                    setLoading(false);
-
+                    navigation.navigate('Login');
                 } else {
-                    setMessage("Invalid login.");
-                    setIsLoggedIn(false);
+                    setMessage("Could not reset password.");
                     setLoading(false)
                 }
             } catch (err) {
@@ -85,22 +91,18 @@ function Login() {
     }
 
     return (
-            <View style={styles.container}>
-                <Text style={styles.headerText}>Login</Text>
-                { message ? (<Text style={styles.item}>{message}</Text>) : null }
-                { validateError.length > 0 ? (<Text style={styles.item}>{validateError.join("\n")}</Text>) : null }
-                    <TextInput style={styles.item} label="Email" mode="outlined" onChangeText={setEmail} value={email}/>
-                    <TextInput style={styles.item} label="Password" mode="outlined" onChangeText={setPassword} value={password} secureTextEntry/>
-                    <View style={styles.item}>
-                        <SkateButton title="Login" color={global.DARK_COLOR} onPress={handleLogin} disabled={false} />
-                    </View>
-                    <SkateLink title="Forgot password?" destination="ForgotPassword"></SkateLink>
-                    <SkateLink title="Create an account" destination="Register" />
-                    <SkateLink title="Reset Password" destination="ResetPassword" />
+        <View style={styles.container}>
+            <Text style={styles.headerText}>Reset Password</Text>
+            { message ? (<Text style={styles.item}>{message}</Text>) : null }
+            { validateError.length > 0 ? (<Text style={styles.item}>{validateError.join("\n")}</Text>) : null }
+            <TextInput style={styles.item} label="*Password" mode="outlined" required onChangeText={setPassword} value={password} secureTextEntry/>
+            <TextInput style={styles.item} label="*Password Confirmation" required mode="outlined" onChangeText={setPasswordConf} value={passwordConf} secureTextEntry/>
+            <View style={styles.item}>
+                <SkateButton title="Reset Password" color={global.DARK_COLOR} onPress={handleReset} disabled={false} />
             </View>
-        )
-
-    }
+        </View>
+    )
+}
 
 const styles = StyleSheet.create({
     container: {
@@ -118,4 +120,5 @@ const styles = StyleSheet.create({
     }
 
 })
-export default Login;
+
+export default ResetPassword;

@@ -7,20 +7,14 @@ import { TextInput } from 'react-native-paper';
 import Loading from "./Loading";
 import SkateButton from "./SkateButton";
 import SkateLink from "./SkateLink";
-import { useNavigation } from '@react-navigation/native';
-import { AuthProvider, useAuth } from '../context/AuthContext';
-function Login() {
 
-    const { isAuthenticated, login } = useAuth();
+function ForgotPassword() {
 
     const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [loading, setLoading] = useState(false); // State for loading indicator
     const [error, setError] = useState(false); // State for loading indicator
     const [validateError, setValidateError] = useState([]);
-    const [message, setMessage] = useState(null); // State for loading indicator
-    const navigation = useNavigation();
+    const [message, setMessage] = useState(""); // State for loading indicator
 
     if (loading) {
         return (
@@ -39,24 +33,17 @@ function Login() {
         } else if (!/\S+@\S+\.\S+/.test(email)) {
             newErrors.push('Email address is invalid');
         }
-        if (!password) {
-            newErrors.push('Password is required');
-        } else if (password.length < 8 || password.length > 15)  {
-            newErrors.push('Password must be at least 8 characters and less than 15 characters');
-        }
         setValidateError(newErrors)
         return newErrors.length === 0; // Return true if no errors
     };
 
-    const handleLogin = async () => {
+    const handleSend = async () => {
         if (validate()) {
             setLoading(true);
             try {
                 const response = await axios.post(
-                    Constants.API_URL + '/api/login',{
-
-                        email: email,
-                        password: password
+                    Constants.API_URL + '/api/forgot-password',{
+                        email: email
                     },
                     {
                         headers: {
@@ -65,16 +52,10 @@ function Login() {
                         }
                     }
                 );
-                if (response.data.loggedin == true) {
+                if (response.data.message === 'Password reset link sent successfully!') {
                     setMessage("Welcome.");
-                    setIsLoggedIn(true);
-                    Utils.setStore('skaterToken', response.data.token);
-                    login();
-                    setLoading(false);
-
                 } else {
-                    setMessage("Invalid login.");
-                    setIsLoggedIn(false);
+                    setMessage("Invalid email.");
                     setLoading(false)
                 }
             } catch (err) {
@@ -85,22 +66,18 @@ function Login() {
     }
 
     return (
-            <View style={styles.container}>
-                <Text style={styles.headerText}>Login</Text>
+        <View style={styles.container}>
+                <Text style={styles.headerText}>Send Password Reset Email</Text>
                 { message ? (<Text style={styles.item}>{message}</Text>) : null }
                 { validateError.length > 0 ? (<Text style={styles.item}>{validateError.join("\n")}</Text>) : null }
-                    <TextInput style={styles.item} label="Email" mode="outlined" onChangeText={setEmail} value={email}/>
-                    <TextInput style={styles.item} label="Password" mode="outlined" onChangeText={setPassword} value={password} secureTextEntry/>
-                    <View style={styles.item}>
-                        <SkateButton title="Login" color={global.DARK_COLOR} onPress={handleLogin} disabled={false} />
-                    </View>
-                    <SkateLink title="Forgot password?" destination="ForgotPassword"></SkateLink>
-                    <SkateLink title="Create an account" destination="Register" />
-                    <SkateLink title="Reset Password" destination="ResetPassword" />
-            </View>
-        )
+                <TextInput style={styles.item} label="Email" mode="outlined" onChangeText={setEmail} value={email}/>
+                <View style={styles.item}>
+                    <SkateButton title="Send Password Reset Email" color={global.DARK_COLOR} onPress={handleSend} disabled={false} />
+                </View>
+        </View>
+    )
 
-    }
+}
 
 const styles = StyleSheet.create({
     container: {
@@ -118,4 +95,5 @@ const styles = StyleSheet.create({
     }
 
 })
-export default Login;
+
+export default ForgotPassword;
