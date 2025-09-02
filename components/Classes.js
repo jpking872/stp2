@@ -10,11 +10,10 @@ import Calendar from './Calendar';
 import SkateButton from './SkateButton';
 import Loading from './Loading';
 import Profile from './Profile';
-import {useAuth} from "../context/AuthContext";
 
 function Classes() {
 
-    const { signupDate, setSignupDate } = useAuth();
+    const signupDate = useState(dayjs('2025-07-16 09:30:00').format('YYYY-MM-DD'))
 
     const [classes, setClasses] = useState([]); // State to store fetched data
     const [registered, setRegistered] = useState([]); // State to store fetched data
@@ -96,7 +95,7 @@ function Classes() {
         fetchAccountData();
         setReload(false);
 
-    }, [signupDate, reload]);
+    }, [reload]);
 
     if (loading) {
         return (
@@ -106,12 +105,6 @@ function Classes() {
 
     if (error) {
         return <Text>Error: {error.message}</Text>;
-    }
-
-    function ChangeDate(curdate) {
-        setLoading(true);
-        setSignupDate(curdate);
-        setReload(true);
     }
 
     function isRegistered(i) {
@@ -151,7 +144,7 @@ function Classes() {
     function renderBook(i) {
 
         //const now = dayjs();
-        const now = dayjs('2025-07-30 09:30:00');
+        const now = dayjs('2025-07-16 09:30:00');
 
         let sessionTime = dayjs(classes[i].start);
         let regSessionTime = dayjs(classes[i].start).add(30, 'minute');
@@ -215,9 +208,6 @@ function Classes() {
             <View>
                 <Text style={styles.accountText}>Freestyles: {accountData.numFree}<Text style={styles.green }>({accountData.numFreePass})</Text><Text style={styles.highlight}> | </Text>Classes: {accountData.numClasses}<Text style={styles.highlight}> | </Text>Purchased: {accountData.adjustments}</Text>
                 <Text style={styles.accountText}>Balance: <Text style={ balance <= 0 ? styles.error: null }>{balance}</Text></Text>
-            </View>
-            <View>
-                <Calendar onUpdate={(value) => ChangeDate(value)} />
             </View>
         </View>
     )
