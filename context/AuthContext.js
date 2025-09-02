@@ -3,10 +3,15 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import * as SecureStore from 'expo-secure-store';
 import axios from "axios";
 import * as Constants from '../utils/global';
-export const AuthContext = createContext({ isAuthenticated: false });
+import dayjs from 'dayjs';
+export const AuthContext = createContext({ isAuthenticated: false, userData: [] });
 
 export const AuthProvider = ({ children }) => {
+
     const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [userData, setUserData] = useState([]);
+    //const [signupDate, setSignupDate] = useState(dayjs());
+    const [signupDate, setSignupDate] = useState(dayjs('2025-07-30 09:30:00').format('YYYY-MM-DD'));
 
     useEffect(() => {
 
@@ -15,30 +20,54 @@ export const AuthProvider = ({ children }) => {
 
         const isAuth = () => {
 
+            if (!skaterToken) return;
+
             const response = axios.get(
                 Constants.API_URL + '/api/isAuthenticated',
                 {
                     headers: {
-                        Authorization: 'Bearer ' + skaterToken
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'Authorization': 'Bearer ' + skaterToken
                     }
                 }
             ).then(response => {
                 console.log("Auth response: " + response.data);
-                setIsAuthenticated(response.data === 'authenticated')
+                setIsAuthenticated(response.data === 'authenticated');
+                getUserData();
             });
 
         }
 
         isAuth();
+        const getUserData = () => {
+            const response = axios.get(
+                Constants.API_URL + '/api/user-data',
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'Authorization': 'Bearer ' + skaterToken
+                    }
+                }
+            ).then(response => {
+                console.log("userData: " + response.data);
+                setUserData(response.data);
+            });
+        }
 
-    }, []);
+        }, [isAuthenticated]);
 
-    const login = () => setIsAuthenticated(true);
-    const logout = () => setIsAuthenticated(false);
-
+    const login = () => {
+        setIsAuthenticated(true);
+    }
+    const logout = () => {
+        setIsAuthenticated(false);
+        setUserData([]);
+    }
 
     return (
-        <AuthContext.Provider value={{ isAuthenticated, login, logout}}>
+        <AuthContext.Provider value={{ isAuthenticated, login, logout, userData, signupDate, setSignupDate}}>
             {children}
         </AuthContext.Provider>
     );

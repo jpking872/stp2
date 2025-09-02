@@ -10,11 +10,12 @@ import SkateButton from './SkateButton';
 import Loading from './Loading';
 import { DataTable } from 'react-native-paper';
 import Profile from "./Profile";
+import {useAuth} from "../context/AuthContext";
 
 function Skaters() {
 
-    const currentDateTime = '2025-07-16 09:30:00';
-    const [signupDate, setSignupDate] = useState(dayjs(currentDateTime).format('YYYY-MM-DD'));
+    const { signupDate, setSignupDate } = useAuth();
+
     const [sessions, setSessions] = useState("");
     const [skaters, setSkaters] = useState([]);
     const [classes, setClasses] = useState([]);

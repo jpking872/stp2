@@ -10,11 +10,11 @@ import Calendar from './Calendar';
 import SkateButton from './SkateButton';
 import Loading from './Loading';
 import Profile from './Profile';
+import {useAuth} from "../context/AuthContext";
 
 function Signup() {
 
-    const currentDateTime = '2025-07-30 09:30:00';
-    const [signupDate, setSignupDate] = useState(dayjs(currentDateTime).format('YYYY-MM-DD'));
+    const { signupDate, setSignupDate } = useAuth();
 
     const [sessions, setSessions] = useState([]); // State to store fetched data
     const [registered, setRegistered] = useState([]); // State to store fetched data
@@ -151,7 +151,9 @@ function Signup() {
 
     function renderSkate(i) {
 
-        const now = dayjs(currentDateTime);
+        const now = dayjs('2025-07-30 09:30:00');
+        //const now = dayjs();
+
         let sessionTime = dayjs(sessions[i].session_time);
         let regSessionTime = dayjs(sessions[i].session_time).add(30, 'minute');
         const passThisDay = false;

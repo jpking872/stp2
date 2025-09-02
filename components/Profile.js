@@ -3,13 +3,21 @@ import { Text, StyleSheet, View } from 'react-native';
 import '../utils/global';
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import dayjs from "dayjs";
+import {useAuth} from "../context/AuthContext";
 
 function Profile(props) {
 
+    const { userData } = useAuth();
+    console.log(userData)
+
     return (
-        <View style={styles.header}>{props.pass ? <MaterialIcons name="key" style={styles.green} size={32} /> : <MaterialIcons name="ice-skating" style={styles.darkColor} size={32} />}
+        <View style={styles.header}>
+            <View style={styles.iconRow}>
+            <MaterialIcons name="ice-skating" style={styles.levelIcon} size={32} />
+            {props.pass || 1 ? <MaterialIcons name="key" style={styles.green} size={32} /> : null }
+            </View>
             <View style={styles.memberData}>
-                <Text style={styles.headerText}>Nick Riviera</Text>
+                <Text style={styles.headerText}>{userData[0].sfname + " " + userData[0].slname}</Text>
                 <Text style={[styles.headerText, styles.member]}>Junior Freeskate</Text>
             </View>
             <View style={styles.memberData}>
@@ -50,6 +58,13 @@ function Profile(props) {
         green: {
             color: global.GREEN
         },
+        iconRow: {
+            flexDirection: 'row'
+        },
+        levelIcon : {
+            color: global.DARK_COLOR,
+            marginRight:3
+        }
     });
 
 export default Profile;
