@@ -13,7 +13,7 @@ import Profile from './Profile';
 
 function Classes() {
 
-    const signupDate = useState(dayjs('2025-07-16 09:30:00').format('YYYY-MM-DD'))
+    const signupDate = dayjs('2025-07-16 09:30:00').format('YYYY-MM-DD');
 
     const [classes, setClasses] = useState([]); // State to store fetched data
     const [registered, setRegistered] = useState([]); // State to store fetched data
