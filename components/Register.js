@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { Text, StyleSheet, View, Linking } from 'react-native';
+import { Text, StyleSheet, View, Platform, KeyboardAvoidingView } from 'react-native';
 import * as Constants from '../utils/global';
 import * as Utils from '../utils/functions';
 import axios from "axios";
@@ -112,8 +112,9 @@ function Register() {
                 <TextInput style={styles.item} label="*Password" mode="outlined" required onChangeText={setPassword} value={password} secureTextEntry/>
                 <TextInput style={styles.item} label="*Password Confirmation" required mode="outlined" onChangeText={setPasswordConf} value={passwordConf} secureTextEntry/>
                 <View style={styles.item}>
-                    <SkateButton title="Register" color={global.DARK_COLOR} onPress={handleRegister} disabled={false} />
+                    <SkateButton title="Sign Up" color={global.DARK_COLOR} onPress={handleRegister} disabled={false} />
                 </View>
+                <SkateLink title="Return to sign in" destination="Login" />
         </View>
     )
 

@@ -10,6 +10,7 @@ import Calendar from './Calendar';
 import SkateButton from './SkateButton';
 import Loading from './Loading';
 import Profile from './Profile';
+import SkateText from './SkateText';
 
 function Classes() {
 
@@ -104,7 +105,7 @@ function Classes() {
     }
 
     if (error) {
-        return <Text>Error: {error.message}</Text>;
+        return <SkateText>Error: {error.message}</SkateText>;
     }
 
     function isRegistered(i) {
@@ -198,16 +199,16 @@ function Classes() {
                     classes.map((item, index) => (
                         <View style={[styles.sessionRow, index % 2 === 0 ? styles.even : styles.odd]} key={item.id}>
                             <View style={styles.skateIcon}>{renderBook(index)}</View>
-                            <Text style={styles.skateText}>{dayjs(item.start).format('ddd MMM D h:mma')} to {dayjs(item.start).add(item.duration, 'minute').format('h:mma')}{'\n'}<Text style={styles.highlight}>{item.title} ({item.size - item.count} of {item.size})</Text></Text>
+                            <SkateText style={styles.skateText}>{dayjs(item.start).format('ddd MMM D h:mma')} to {dayjs(item.start).add(item.duration, 'minute').format('h:mma')}{'\n'}<SkateText style={styles.highlight}>{item.title} ({item.size - item.count} of {item.size})</SkateText></SkateText>
                         </View>
                     ))) : (
-                    <View style={styles.indentText}><Text>No classes today</Text></View>
+                    <View style={styles.indentText}><SkateText>No classes today</SkateText></View>
                 )}
             </ScrollView>
             <SkateButton title={"Signup (" + registered.length + ")"} color={global.DARK_COLOR} onPress={handleSignup} disabled={ availableSessions.count == 0}/>
             <View style={styles.accountView}>
-                <Text style={styles.accountText}>Freestyles: {accountData.numFree}<Text style={styles.green }>({accountData.numFreePass})</Text><Text style={styles.highlight}> | </Text>Classes: {accountData.numClasses}<Text style={styles.highlight}> | </Text>Purchased: {accountData.adjustments}</Text>
-                <Text style={styles.accountText}>Balance: <Text style={ balance <= 0 ? styles.error: null }>{balance}</Text></Text>
+                <SkateText style={styles.accountText}>Freestyles: {accountData.numFree}<SkateText style={styles.green }>({accountData.numFreePass})</SkateText><SkateText style={styles.highlight}> | </SkateText>Classes: {accountData.numClasses}<SkateText style={styles.highlight}> | </SkateText>Purchased: {accountData.adjustments}</SkateText>
+                <SkateText style={styles.accountText}>Balance: <SkateText style={ balance <= 0 ? styles.error: null }>{balance}</SkateText></SkateText>
             </View>
         </View>
     )
@@ -237,7 +238,6 @@ const styles = StyleSheet.create({
         alignItems: 'left'
     },
     skateText: {
-        fontSize: 16,
         paddingTop:3,
         paddingBottom:3,
         marginLeft:10,

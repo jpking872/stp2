@@ -33,9 +33,6 @@ function Profile(props) {
             paddingVertical: 3,
             backgroundColor: "#DDDDDD"
         },
-        headerText: {
-            fontSize: 16
-        },
         odd: {
             backgroundColor: "#DDDDDD"
         },

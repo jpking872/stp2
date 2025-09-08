@@ -9,6 +9,7 @@ import {useAuth} from "../context/AuthContext";
 import Loading from './Loading';
 import Profile from './Profile';
 import Calendar from "./Calendar";
+import SkateText from './SkateText';
 
 function Summary() {
 
@@ -157,24 +158,24 @@ function Summary() {
     }
 
     if (error) {
-        return <Text>Error: {error.message}</Text>;
+        return <SkateText>Error: {error.message}</SkateText>;
     }
 
     function RecentFreestyleTable() {
         return (
             <View>
                 <View style={styles.tableHeader}>
-                    <Text style={styles.centerText}>Freestyles</Text>
+                    <SkateText style={styles.centerText}>Freestyles</SkateText>
                 </View>
             { freestyles && freestyles.length ? (
                 freestyles.map((freestyle, index) => (
                     <View key={index} style={styles.summaryRow}>
-                        <Text style={styles.summaryDate}>{dayjs(freestyle.freestyleDate).format('MMM D, YYYY')}</Text>
-                        <Text style={styles.summaryTitle}>{freestyle.freestyleName}</Text>
-                        <Text style={ freestyle.freestylePass === 1 ? [styles.summaryNumber, styles.green] : styles.summaryNumber }>{freestyle.numSessions}</Text>
+                        <SkateText style={styles.summaryDate}>{dayjs(freestyle.freestyleDate).format('MMM D, YYYY')}</SkateText>
+                        <SkateText style={styles.summaryTitle}>{freestyle.freestyleName}</SkateText>
+                        <SkateText style={ freestyle.freestylePass === 1 ? [styles.summaryNumber, styles.green] : styles.summaryNumber }>{freestyle.numSessions}</SkateText>
                     </View>
             ))): (
-                <Text style={styles.centerText}>No freestyles</Text>
+                <SkateText style={styles.centerText}>No freestyles</SkateText>
                 )}
             </View>
         );
@@ -186,16 +187,16 @@ function Summary() {
         return (
             <View>
                 <View style={styles.tableHeader}>
-                    <Text style={styles.centerText}>Classes</Text>
+                    <SkateText style={styles.centerText}>Classes</SkateText>
                 </View>
                 { classes && classes.length ? (
                     classes.map((c, index) => (
                         <View key={index} style={styles.summaryRow}>
-                            <Text style={styles.summaryDate}>{dayjs(c.classDate).format('MMM D, YYYY')}</Text>
-                            <Text style={styles.summaryClass}>{c.classTitle}</Text>
+                            <SkateText style={styles.summaryDate}>{dayjs(c.classDate).format('MMM D, YYYY')}</SkateText>
+                            <SkateText style={styles.summaryClass}>{c.classTitle}</SkateText>
                         </View>
                     ))): (
-                    <Text style={styles.centerText}>No classes</Text>
+                    <SkateText style={styles.centerText}>No classes</SkateText>
                 )}
             </View>
         );
@@ -207,17 +208,17 @@ function Summary() {
         return (
             <View>
                 <View style={styles.tableHeader}>
-                    <Text style={styles.centerText}>Adjustments</Text>
+                    <SkateText style={styles.centerText}>Adjustments</SkateText>
                 </View>
                 { adjustments && adjustments.length ? (
                     adjustments.map((adjustment, index) => (
                         <View key={index} style={styles.summaryRow}>
-                            <Text style={styles.summaryDate}>{dayjs(adjustment.actionDate).format('MMM D, YYYY')}</Text>
-                            <Text style={styles.summaryTitle}>{adjustment.title}</Text>
-                            <Text style={ styles.summaryNumber }>{adjustment.points}</Text>
+                            <SkateText style={styles.summaryDate}>{dayjs(adjustment.actionDate).format('MMM D, YYYY')}</SkateText>
+                            <SkateText style={styles.summaryTitle}>{adjustment.title}</SkateText>
+                            <SkateText style={ styles.summaryNumber }>{adjustment.points}</SkateText>
                         </View>
                     ))): (
-                    <Text style={styles.centerText}>No adjustments</Text>
+                    <SkateText style={styles.centerText}>No adjustments</SkateText>
                 )}
             </View>
         );
@@ -230,29 +231,31 @@ function Summary() {
 
         <View>
             <View style={styles.tableHeader}>
-                <Text style={styles.centerText}>History</Text>
+                <SkateText style={styles.centerText}>History</SkateText>
             </View>
             <View style={[styles.summaryRow, styles.odd]}>
-                <Text style={styles.historyDate}> </Text>
-                <Text style={styles.historyNumber}>FS-P</Text>
-                <Text style={styles.historyNumber}>CL</Text>
-                <Text style={styles.historyNumber}>Pass</Text>
-                <Text style={styles.historyNumber}>Adj</Text>
-                <Text style={styles.historyNumber}>$</Text>
+                <SkateText style={styles.historyDate}> </SkateText>
+                <SkateText style={styles.historyNumber}>FS</SkateText>
+                <SkateText style={styles.historyNumber}>C</SkateText>
+                <SkateText style={styles.historyNumber}>P</SkateText>
+                <SkateText style={styles.historyNumber}>A</SkateText>
+                <SkateText style={styles.historyNumber}>$</SkateText>
             </View>
+            <ScrollView>
             { history && history.length ? (
                 history.map((h, index) => (
                     <View key={index} style={styles.summaryRow}>
-                        <Text style={styles.historyDate}>{dayjs(h.year + "-" + h.month + "-01").format('MMM YYYY')}</Text>
-                        <Text style={ styles.historyNumber }>{h.freestyles}-{h.freestyles_pass}</Text>
-                        <Text style={ styles.historyNumber }>{h.classes}</Text>
-                        <Text style={ styles.historyNumber }>{h.passes}</Text>
-                        <Text style={ styles.historyNumber }>{h.adjustments}</Text>
-                        <Text style={ styles.historyNumber }>{h.amount}</Text>
+                        <SkateText style={styles.historyDate}>{dayjs(h.year + "-" + h.month + "-01").format('MMM YYYY')}</SkateText>
+                        <SkateText style={ styles.historyLargeNumber }>{h.freestyles}-{h.freestyles_pass}</SkateText>
+                        <SkateText style={ styles.historyNumber }>{h.classes}</SkateText>
+                        <SkateText style={ styles.historyNumber }>{h.passes}</SkateText>
+                        <SkateText style={ styles.historyNumber }>{h.adjustments}</SkateText>
+                        <SkateText style={ styles.historyNumber }>{h.amount}</SkateText>
                     </View>
                 ))): (
-                <Text style={styles.centerText}>No history</Text>
+                <SkateText style={styles.centerText}>No history</SkateText>
             )}
+            </ScrollView>
         </View>
 
         );
@@ -269,11 +272,11 @@ function Summary() {
                 <HistoryTable />
             </ScrollView>
             <View style={styles.accountView}>
-                <Text style={styles.accountText}>Freestyles: {accountData.numFree}<Text style={styles.green }>({accountData.numFreePass})</Text><Text style={styles.highlight}> | </Text>Classes: {accountData.numClasses}<Text style={styles.highlight}> | </Text>Purchased: {accountData.adjustments}</Text>
-                <Text style={styles.accountText}>Balance: <Text style={ balance <= 0 ? styles.error: null }>{balance}</Text></Text>
+                <SkateText style={styles.accountText}>Freestyles: {accountData.numFree}<SkateText style={styles.green }>({accountData.numFreePass})</SkateText><SkateText style={styles.highlight}> | </SkateText>Classes: {accountData.numClasses}<SkateText style={styles.highlight}> | </SkateText>Purchased: {accountData.adjustments}</SkateText>
+                <SkateText style={styles.accountText}>Balance: <SkateText style={ balance <= 0 ? styles.error: null }>{balance}</SkateText></SkateText>
             </View>
             <TouchableOpacity onPress={() => logoutPressed() }>
-                <Text style={styles.LogoutLink}>Logout</Text>
+                <SkateText style={styles.LogoutLink}>Logout</SkateText>
             </TouchableOpacity>
         </View>
     );
@@ -300,33 +303,32 @@ const styles = StyleSheet.create({
     },
     summaryTitle: {
         width: '65%',
-        fontSize: 14,
         marginLeft:5,
         marginRight:5,
         color: global.DARK_COLOR
     },
     summaryNumber: {
         width: '10%',
-        fontSize: 14,
         marginLeft:5,
         marginRight:5,
         color: global.DARK_COLOR
     },
     summaryClass: {
         width: '70%',
-        fontSize: 14,
         marginLeft:5,
         marginRight:5,
         color: global.DARK_COLOR
     },
     historyDate: {
-        width: '25%',
+        width: '27%',
         paddingLeft: 5
+    },
+    historyLargeNumber: {
+        width:'14%'
     },
     historyNumber: {
         textAlign: 'center',
-        width: '12%',
-        fontSize: 14,
+        width: '11%',
         marginLeft:5,
         marginRight:5,
         color: global.DARK_COLOR

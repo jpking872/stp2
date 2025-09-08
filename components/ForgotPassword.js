@@ -84,6 +84,7 @@ function ForgotPassword() {
                 <View style={styles.item}>
                     <SkateButton title="Send Password Reset Email" color={global.DARK_COLOR} onPress={handleSend} disabled={false} />
                 </View>
+                <SkateLink title="Return to sign in" destination="Login" />
             </View>
             )}
         </View>

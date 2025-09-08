@@ -1,17 +1,22 @@
-// components/MyAppText.tsx
 import React from 'react';
-import { Text, TextProps, StyleSheet } from 'react-native';
+import { Text, StyleSheet, Platform } from 'react-native';
 
-const MyAppText = ({ style, ...props }) => {
+const SkateText = ({ style, ...props }) => {
     return <Text {...props} style={[styles.default, style]} />;
 };
 
 const styles = StyleSheet.create({
     default: {
-        fontSize: 14, // Set your default size here
-        fontFamily: '', // Or your custom font
+        fontSize: Platform.select({
+                ios: 14,
+                android: 16
+            }), // Set your default size here
+        fontFamily: Platform.select({
+            ios: 'San Francisco',
+            android: 'Roboto'
+        }),
         color: '#343434', // Optional default color
     },
 });
 
-export default MyAppText;
+export default SkateText;

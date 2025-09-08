@@ -11,6 +11,7 @@ import Loading from './Loading';
 import { DataTable } from 'react-native-paper';
 import Profile from "./Profile";
 import {useAuth} from "../context/AuthContext";
+import SkateText from './SkateText';
 
 function Skaters() {
 
@@ -91,28 +92,28 @@ function Skaters() {
     }
 
     if (error) {
-        return <Text>Error: {error.message}</Text>;
+        return <SkateText>Error: {error.message}</SkateText>;
     }
 
     function SkaterTable() {
         return (
             <View>
                 <View style={styles.tableHeader}>
-                    <Text>Freestyles</Text>
-                    <Text style={styles.darkColor}>{ sessions }</Text>
+                    <SkateText>Freestyles</SkateText>
+                    <SkateText style={styles.darkColor}>{ sessions }</SkateText>
                 </View>
                 <View style={[styles.skaterRow, styles.odd]}>
-                    <Text style={styles.skaterName}>Skater</Text>
-                    <Text style={styles.skaterSessions}>Sessions</Text>
+                    <SkateText style={styles.skaterName}>Skater</SkateText>
+                    <SkateText style={styles.skaterSessions}>Sessions</SkateText>
                 </View>
                 {skaters && skaters.length ? (
                     skaters.map((skater, index) => (
                         <View style={[styles.skaterRow, index % 2 === 0 ? styles.even : styles.odd]} key={skater.id}>
-                            <Text style={styles.skaterName}>{skater.skater}</Text>
-                            <Text style={styles.skaterSessions}>{skater.sessions}</Text>
+                            <SkateText style={styles.skaterName}>{skater.skater}</SkateText>
+                            <SkateText style={styles.skaterSessions}>{skater.sessions}</SkateText>
                         </View>
                     ))) : (
-                    <View style={styles.indentText}><Text>No skaters today.</Text></View>
+                    <View style={styles.indentText}><SkateText>No skaters today.</SkateText></View>
                 )}
             </View>
         );
@@ -122,16 +123,16 @@ function Skaters() {
         return (
             <View>
                 <View style={styles.tableHeader}>
-                    <Text>Classes</Text>
+                    <SkateText>Classes</SkateText>
                 </View>
                 { classes && classes.length ? (
                     classes.map((c, index) => (
                     <View key={c.id} style={[styles.classRow, index % 2 === 0 ? styles.odd: null]}>
-                        <Text style={styles.classTitle}>{ c.title } {dayjs(c.start).format('h:mma')} - {dayjs(c.start).add(c.duration, 'minute').format('h:mma')}</Text>
-                        <Text style={styles.classParticipants}>{c.participants.length > 0 ? c.participants : "No skaters"}</Text>
+                        <SkateText style={styles.classTitle}>{ c.title } {dayjs(c.start).format('h:mma')} - {dayjs(c.start).add(c.duration, 'minute').format('h:mma')}</SkateText>
+                        <SkateText style={styles.classParticipants}>{c.participants.length > 0 ? c.participants : "No skaters"}</SkateText>
                     </View>
                 ))) : (
-                    <View style={styles.indentText}><Text>No classes today.</Text></View>
+                    <View style={styles.indentText}><SkateText>No classes today.</SkateText></View>
                 )}
             </View>
         );

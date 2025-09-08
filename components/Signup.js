@@ -10,6 +10,7 @@ import Calendar from './Calendar';
 import SkateButton from './SkateButton';
 import Loading from './Loading';
 import Profile from './Profile';
+import SkateText from './SkateText';
 import {useAuth} from "../context/AuthContext";
 
 function Signup() {
@@ -110,7 +111,7 @@ function Signup() {
     }
 
     if (error) {
-        return <Text>Error: {error.message}</Text>;
+        return <SkateText>Error: {error.message}</SkateText>;
     }
 
     function isRegistered(i) {
@@ -216,16 +217,16 @@ function Signup() {
                 sessions.map((item, index) => (
                     <View style={[styles.sessionRow, index % 2 === 0 ? styles.even : styles.odd]} key={item.id}>
                         <View style={styles.skateIcon}>{renderSkate(index)}</View>
-                        <Text style={styles.skateText}>{dayjs(item.session_time).format('h:mma')} to {dayjs(item.session_time).add(item.duration, 'minute').format('h:mma')}{'\n'}<Text style={styles.highlight}>{item.name}</Text> ({item.count} of {item.size})</Text>
+                        <SkateText style={styles.skateText}>{dayjs(item.session_time).format('h:mma')} to {dayjs(item.session_time).add(item.duration, 'minute').format('h:mma')}{'\n'}<SkateText style={styles.highlight}>{item.name}</SkateText> ({item.count} of {item.size})</SkateText>
                     </View>
                 ))) : (
-                    <View style={styles.indentText}><Text>No freestyles today</Text></View>
+                    <View style={styles.indentText}><SkateText>No freestyles today</SkateText></View>
                 )}
             </ScrollView>
             <SkateButton title={"Signup (" + registered.length + ")"} color={global.DARK_COLOR} onPress={handleSignup} disabled={ availableSessions.count == 0}/>
             <View style={styles.accountView}>
-                <Text style={styles.accountText}>Freestyles: {accountData.numFree}<Text style={styles.green }>({accountData.numFreePass})</Text><Text style={styles.highlight}> | </Text>Classes: {accountData.numClasses}<Text style={styles.highlight}> | </Text>Purchased: {accountData.adjustments}</Text>
-                <Text style={styles.accountText}>Balance: <Text style={ balance <= 0 ? styles.error: null }>{balance}</Text></Text>
+                <SkateText style={styles.accountText}>Freestyles: {accountData.numFree}<SkateText style={styles.green }>({accountData.numFreePass})</SkateText><SkateText style={styles.highlight}> | </SkateText>Classes: {accountData.numClasses}<SkateText style={styles.highlight}> | </SkateText>Purchased: {accountData.adjustments}</SkateText>
+                <SkateText style={styles.accountText}>Balance: <SkateText style={ balance <= 0 ? styles.error: null }>{balance}</SkateText></SkateText>
             </View>
             <View>
                 <Calendar onUpdate={(value) => ChangeDate(value)} />
@@ -256,7 +257,6 @@ function Signup() {
             alignItems: 'left'
         },
         skateText: {
-            fontSize: 16,
             paddingTop:3,
             paddingBottom:3,
             marginLeft:10,
