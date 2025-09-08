@@ -55,6 +55,7 @@ function Skaters() {
                 }); // Replace with your API endpoint
                 setSkaters(response.data);
             } catch (err) {
+                console.log('in today')
                 setError(err);
             } finally {
                 setLoading(false);
@@ -72,6 +73,7 @@ function Skaters() {
                 }); // Replace with your API endpoint
                 setClasses(response.data);
             } catch (err) {
+                console.log('in classes')
                 setError(err);
             } finally {
                 setLoading(false);
@@ -110,7 +112,7 @@ function Skaters() {
                             <Text style={styles.skaterSessions}>{skater.sessions}</Text>
                         </View>
                     ))) : (
-                    <View style={styles.indentText}><Text>No skaters today</Text></View>
+                    <View style={styles.indentText}><Text>No skaters today.</Text></View>
                 )}
             </View>
         );
@@ -122,13 +124,15 @@ function Skaters() {
                 <View style={styles.tableHeader}>
                     <Text>Classes</Text>
                 </View>
-                { classes &&
+                { classes && classes.length ? (
                     classes.map((c, index) => (
                     <View key={c.id} style={[styles.classRow, index % 2 === 0 ? styles.odd: null]}>
                         <Text style={styles.classTitle}>{ c.title } {dayjs(c.start).format('h:mma')} - {dayjs(c.start).add(c.duration, 'minute').format('h:mma')}</Text>
                         <Text style={styles.classParticipants}>{c.participants.length > 0 ? c.participants : "No skaters"}</Text>
                     </View>
-                ))}
+                ))) : (
+                    <View style={styles.indentText}><Text>No classes today.</Text></View>
+                )}
             </View>
         );
     }

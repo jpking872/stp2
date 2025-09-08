@@ -21,6 +21,8 @@ function Summary() {
     const [classes, setClasses] = useState([]);
     const [adjustments, setAdjustments] = useState([]);
     const [history, setHistory] = useState([]);
+    const [accountData, setAccountData] = useState({});
+    const [balance, setBalance] = useState(0); //
     const [loading, setLoading] = useState(true); // State for loading indicator
     const [error, setError] = useState(null); // State for error handling
 
@@ -110,6 +112,27 @@ function Summary() {
         };
 
         fetchHistory();
+
+        const fetchAccountData = async () => {
+            try {
+                const response = await axios.get(Constants.API_URL + '/api/summary/account', {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'Authorization': 'Bearer ' + skaterToken
+                    }
+                }); // Replace with your API endpoint
+                const data = response.data;
+                setAccountData(data);
+                setBalance(data.balance);
+            } catch (err) {
+                setError(err);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchAccountData();
 
     }, []);
 
@@ -245,6 +268,10 @@ function Summary() {
                 <RecentAdjustmentTable />
                 <HistoryTable />
             </ScrollView>
+            <View style={styles.accountView}>
+                <Text style={styles.accountText}>Freestyles: {accountData.numFree}<Text style={styles.green }>({accountData.numFreePass})</Text><Text style={styles.highlight}> | </Text>Classes: {accountData.numClasses}<Text style={styles.highlight}> | </Text>Purchased: {accountData.adjustments}</Text>
+                <Text style={styles.accountText}>Balance: <Text style={ balance <= 0 ? styles.error: null }>{balance}</Text></Text>
+            </View>
             <TouchableOpacity onPress={() => logoutPressed() }>
                 <Text style={styles.LogoutLink}>Logout</Text>
             </TouchableOpacity>
@@ -333,7 +360,16 @@ const styles = StyleSheet.create({
         textAlign: 'right',
         paddingBottom: 5,
         paddingRight: 3
-    }
+    },
+    accountText: {
+        textAlign: 'center'
+    },
+    accountView: {
+        marginVertical:5,
+        paddingVertical: 3,
+        backgroundColor: "#DDDDDD",
+        borderRadius:8
+    },
 
 })
 

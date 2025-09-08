@@ -1,18 +1,22 @@
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import React, { useState, useEffect } from 'react';
+import React, { useCallback, useState } from 'react';
 import '../utils/global';
 import SkateLink from '../components/SkateLink';
-import { useNavigation } from '@react-navigation/native';
-import axios from "axios";
-import * as Utils from "../utils/functions";
-import { AuthProvider, useAuth } from '../context/AuthContext';
-import * as Constants from "../utils/global";
+import { useFocusEffect } from '@react-navigation/native';
 import Summary from "../components/Summary";
 
 function SummaryScreen() {
 
+    const [refreshKey, setRefreshKey] = useState(0);
+
+    useFocusEffect(
+        useCallback(() => {
+            setRefreshKey(prev => prev + 1); // Triggers re-render
+        }, [])
+    );
+
     return (
-        <Summary />
+        <Summary key={refreshKey}/>
     );
 
 }

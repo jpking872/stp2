@@ -21,7 +21,7 @@ function HomeScreen() {
 
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <Image source={require('../assets/icon.png')} style={styles.headerImage} />
+            <Image source={require('../assets/homescreen.jpg')} style={styles.headerImage} />
             { isAuthenticated ? null : (
                 <View>
                     <View style={{ marginBottom: 15 }}><SkateButton title="Sign in" color={global.DARK_COLOR} onPress={gotoLogin} disabled={false} /></View>
@@ -41,9 +41,10 @@ const styles = StyleSheet.create({
         backgroundColor: global.DARK_COLOR
     },
     headerImage: {
-        width: 240,
-        height: 240,
-        marginBottom: 80
+        width: 320,
+        height: 320,
+        marginBottom: 30,
+        backgroundColor:'#222222'
     }
 })
 

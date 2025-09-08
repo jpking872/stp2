@@ -96,7 +96,6 @@ function Login() {
                     </View>
                     <SkateLink title="Forgot password?" destination="ForgotPassword"></SkateLink>
                     <SkateLink title="Create an account" destination="Register" />
-                    <SkateLink title="Reset Password" destination="ResetPassword" />
             </View>
         )
 

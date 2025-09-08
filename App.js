@@ -1,8 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Header from './components/Header';
 import './utils/global';
 import { AuthProvider, AuthContext } from './context/AuthContext';

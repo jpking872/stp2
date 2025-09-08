@@ -223,7 +223,7 @@ function Signup() {
                 )}
             </ScrollView>
             <SkateButton title={"Signup (" + registered.length + ")"} color={global.DARK_COLOR} onPress={handleSignup} disabled={ availableSessions.count == 0}/>
-            <View>
+            <View style={styles.accountView}>
                 <Text style={styles.accountText}>Freestyles: {accountData.numFree}<Text style={styles.green }>({accountData.numFreePass})</Text><Text style={styles.highlight}> | </Text>Classes: {accountData.numClasses}<Text style={styles.highlight}> | </Text>Purchased: {accountData.adjustments}</Text>
                 <Text style={styles.accountText}>Balance: <Text style={ balance <= 0 ? styles.error: null }>{balance}</Text></Text>
             </View>
@@ -239,7 +239,7 @@ function Signup() {
             flex: 1,
             height: '100%',
             marginVertical: 10,
-            marginHorizontal: 10,
+            marginHorizontal: 10
         },
         sessionScroll: {
             marginVertical: 5
@@ -293,6 +293,12 @@ function Signup() {
         },
         accountText: {
             textAlign: 'center'
+        },
+        accountView: {
+            marginVertical:5,
+            paddingVertical: 3,
+            backgroundColor: "#DDDDDD",
+            borderRadius:8
         },
         odd: {
             backgroundColor: "#DDDDDD"

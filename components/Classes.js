@@ -205,7 +205,7 @@ function Classes() {
                 )}
             </ScrollView>
             <SkateButton title={"Signup (" + registered.length + ")"} color={global.DARK_COLOR} onPress={handleSignup} disabled={ availableSessions.count == 0}/>
-            <View>
+            <View style={styles.accountView}>
                 <Text style={styles.accountText}>Freestyles: {accountData.numFree}<Text style={styles.green }>({accountData.numFreePass})</Text><Text style={styles.highlight}> | </Text>Classes: {accountData.numClasses}<Text style={styles.highlight}> | </Text>Purchased: {accountData.adjustments}</Text>
                 <Text style={styles.accountText}>Balance: <Text style={ balance <= 0 ? styles.error: null }>{balance}</Text></Text>
             </View>
@@ -281,7 +281,13 @@ const styles = StyleSheet.create({
     indentText: {
         marginLeft: 10,
         marginTop: 3
-    }
+    },
+    accountView: {
+        marginVertical:5,
+        paddingVertical: 3,
+        backgroundColor: "#DDDDDD",
+        borderRadius:8
+    },
 });
 
 export default Classes;

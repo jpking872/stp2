@@ -14,7 +14,8 @@ function ForgotPassword() {
     const [loading, setLoading] = useState(false); // State for loading indicator
     const [error, setError] = useState(false); // State for loading indicator
     const [validateError, setValidateError] = useState([]);
-    const [message, setMessage] = useState(""); // State for loading indicator
+    const [message, setMessage] = useState(null);
+    const [sentEmail, setSentEmail] = useState(false); // State for loading indicator
 
     if (loading) {
         return (
@@ -53,10 +54,11 @@ function ForgotPassword() {
                     }
                 );
                 if (response.data.message === 'Password reset link sent successfully!') {
-                    setMessage("Welcome.");
+                    setSentEmail(true);
+                    setLoading(false);
                 } else {
                     setMessage("Invalid email.");
-                    setLoading(false)
+                    setLoading(false);
                 }
             } catch (err) {
                 setError(err);
@@ -66,7 +68,15 @@ function ForgotPassword() {
     }
 
     return (
-        <View style={styles.container}>
+        <View>
+        { sentEmail ? (
+            <View style={styles.container}>
+                <Text style={styles.headerText}>Send Password Reset Email</Text>
+                <Text style={styles.resetText}>Your password reset request has been sent to your email.</Text>
+                <SkateLink title="Return to sign in" destination="Login" />
+            </View>
+            ): (
+            <View style={styles.container}>
                 <Text style={styles.headerText}>Send Password Reset Email</Text>
                 { message ? (<Text style={styles.item}>{message}</Text>) : null }
                 { validateError.length > 0 ? (<Text style={styles.item}>{validateError.join("\n")}</Text>) : null }
@@ -74,8 +84,11 @@ function ForgotPassword() {
                 <View style={styles.item}>
                     <SkateButton title="Send Password Reset Email" color={global.DARK_COLOR} onPress={handleSend} disabled={false} />
                 </View>
+            </View>
+            )}
         </View>
     )
+
 
 }
 
@@ -91,6 +104,10 @@ const styles = StyleSheet.create({
         marginBottom:15
     },
     item: {
+        marginBottom:15
+    },
+    resetText: {
+        fontSize: 16,
         marginBottom:15
     }
 
