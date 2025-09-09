@@ -324,7 +324,8 @@ const styles = StyleSheet.create({
         paddingLeft: 5
     },
     historyLargeNumber: {
-        width:'14%'
+        width:'14%',
+        color: global.DARK_COLOR
     },
     historyNumber: {
         textAlign: 'center',

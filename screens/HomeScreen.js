@@ -20,7 +20,7 @@ function HomeScreen() {
     }
 
     return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <View style={styles.container}>
             <Image source={require('../assets/homescreen.jpg')} style={styles.headerImage} />
             { isAuthenticated ? null : (
                 <View>
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: global.DARK_COLOR
+        backgroundColor: '#cccccc'
     },
     headerImage: {
         width: 320,

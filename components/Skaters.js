@@ -102,13 +102,9 @@ function Skaters() {
                     <SkateText>Freestyles</SkateText>
                     <SkateText style={styles.darkColor}>{ sessions }</SkateText>
                 </View>
-                <View style={[styles.skaterRow, styles.odd]}>
-                    <SkateText style={styles.skaterName}>Skater</SkateText>
-                    <SkateText style={styles.skaterSessions}>Sessions</SkateText>
-                </View>
                 {skaters && skaters.length ? (
                     skaters.map((skater, index) => (
-                        <View style={[styles.skaterRow, index % 2 === 0 ? styles.even : styles.odd]} key={skater.id}>
+                        <View style={[styles.skaterRow, index % 2 === 0 ? null : styles.odd]} key={skater.id}>
                             <SkateText style={styles.skaterName}>{skater.skater}</SkateText>
                             <SkateText style={styles.skaterSessions}>{skater.sessions}</SkateText>
                         </View>
@@ -127,7 +123,7 @@ function Skaters() {
                 </View>
                 { classes && classes.length ? (
                     classes.map((c, index) => (
-                    <View key={c.id} style={[styles.classRow, index % 2 === 0 ? styles.odd: null]}>
+                    <View key={c.id} style={[styles.classRow, index % 2 === 0 ? null: styles.odd]}>
                         <SkateText style={styles.classTitle}>{ c.title } {dayjs(c.start).format('h:mma')} - {dayjs(c.start).add(c.duration, 'minute').format('h:mma')}</SkateText>
                         <SkateText style={styles.classParticipants}>{c.participants.length > 0 ? c.participants : "No skaters"}</SkateText>
                     </View>
@@ -168,19 +164,15 @@ const styles = StyleSheet.create({
     },
     skaterRow: {
         flex: 1,
-        flexDirection: 'row',
         alignItems: 'left',
         marginVertical: 0,
         paddingVertical:3
     },
     skaterName: {
-        width: '30%',
         paddingLeft: 5
 
     },
     skaterSessions: {
-        width: '70%',
-        fontSize: 14,
         marginLeft:5,
         marginRight:5,
         color: global.DARK_COLOR
@@ -189,11 +181,11 @@ const styles = StyleSheet.create({
         backgroundColor: "#DDDDDD"
     },
     indentText: {
-        marginLeft: 10,
+        marginLeft: 5,
         marginTop: 3
     },
     tableHeader: {
-        marginVertical: 5,
+        marginTop: 5,
         paddingHorizontal: 5,
         paddingVertical: 3,
         backgroundColor: "#DDDDDD",

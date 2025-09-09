@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native';
+import {Platform, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import Header from './components/Header';
@@ -30,5 +30,9 @@ const styles = StyleSheet.create({
     backgroundColor: global.BG_COLOR,
     alignItems: 'center',
     justifyContent: 'center',
+    padding: Platform.select({
+      ios: 25,
+      android: 14
+    }),
   },
 });
