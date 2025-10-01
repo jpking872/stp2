@@ -27,12 +27,10 @@ function Summary() {
     const [loading, setLoading] = useState(true); // State for loading indicator
     const [error, setError] = useState(null); // State for error handling
 
-
     const skaterToken = Utils.getStore('skaterToken');
     console.log("Summary:" + skaterToken);
 
     useEffect(() => {
-
 
         if (!skaterToken) return;
 
