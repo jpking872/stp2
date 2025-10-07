@@ -83,7 +83,7 @@ function Skaters() {
 
         fetchClasses();
 
-    }, [signupDate]);
+    }, [signupDate, loading]);
 
     if (loading) {
         return (
@@ -135,6 +135,7 @@ function Skaters() {
     }
 
     function ChangeDate(value) {
+        setLoading(true);
         setSignupDate(value);
     }
 

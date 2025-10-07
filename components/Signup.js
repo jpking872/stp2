@@ -152,8 +152,7 @@ function Signup() {
 
     function renderSkate(i) {
 
-        const now = dayjs('2025-07-30 09:30:00');
-        //const now = dayjs();
+        const now = dayjs();
 
         let sessionTime = dayjs(sessions[i].session_time);
         let regSessionTime = dayjs(sessions[i].session_time).add(30, 'minute');

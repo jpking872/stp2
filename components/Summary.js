@@ -16,8 +16,7 @@ function Summary() {
     const navigation = useNavigation();
     const { isAuthenticated, logout } = useAuth();
 
-    const currentDateTime = '2025-07-16 09:30:00';
-    const [signupDate, setSignupDate] = useState(dayjs(currentDateTime).format('YYYY-MM-DD'));
+    const [signupDate, setSignupDate] = useState(dayjs().format('YYYY-MM-DD'));
     const [freestyles, setFreestyles] = useState([]);
     const [classes, setClasses] = useState([]);
     const [adjustments, setAdjustments] = useState([]);
@@ -231,12 +230,12 @@ function Summary() {
             <View style={styles.tableHeader}>
                 <SkateText style={styles.centerText}>History</SkateText>
             </View>
-            <View style={[styles.summaryRow, styles.odd]}>
+            <View style={[styles.summaryRow, styles.odd, styles.historyHeader]}>
                 <SkateText style={styles.historyDate}> </SkateText>
-                <SkateText style={styles.historyNumber}>FS</SkateText>
-                <SkateText style={styles.historyNumber}>C</SkateText>
-                <SkateText style={styles.historyNumber}>P</SkateText>
-                <SkateText style={styles.historyNumber}>A</SkateText>
+                <SkateText style={styles.historyNumber}>Free</SkateText>
+                <SkateText style={styles.historyNumber}>Class</SkateText>
+                <SkateText style={styles.historyNumber}>Pass</SkateText>
+                <SkateText style={styles.historyNumber}>Adj</SkateText>
                 <SkateText style={styles.historyNumber}>$</SkateText>
             </View>
             <ScrollView>
@@ -285,25 +284,28 @@ const styles = StyleSheet.create({
         flex: 1,
         height: '100%',
         marginVertical: 10,
-        marginHorizontal: 10,
+        marginHorizontal: 10
     },
     summaryRow: {
         flex: 1,
         flexDirection: 'row',
         alignItems: 'left',
         marginVertical: 0,
-        paddingVertical: 3
+        paddingVertical: 0,
+        fontSize: 14
     },
     summaryDate: {
-        width: '25%',
-        paddingLeft: 5
+        width: '26%',
+        paddingLeft: 5,
+        fontSize:14
 
     },
     summaryTitle: {
-        width: '65%',
+        width: '64%',
         marginLeft:5,
         marginRight:5,
-        color: global.DARK_COLOR
+        color: global.DARK_COLOR,
+        fontSize:14
     },
     summaryNumber: {
         width: '10%',
@@ -318,12 +320,13 @@ const styles = StyleSheet.create({
         color: global.DARK_COLOR
     },
     historyDate: {
-        width: '27%',
+        width: '26%',
         paddingLeft: 5
     },
     historyLargeNumber: {
         width:'14%',
-        color: global.DARK_COLOR
+        color: global.DARK_COLOR,
+        textAlign: 'center'
     },
     historyNumber: {
         textAlign: 'center',
@@ -346,6 +349,9 @@ const styles = StyleSheet.create({
         paddingHorizontal: 5,
         paddingVertical: 3,
         backgroundColor: "#DDDDDD",
+    },
+    historyHeader: {
+        paddingVertical: 3
     },
     darkColor: {
         color: global.DARK_COLOR

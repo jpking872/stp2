@@ -17,12 +17,12 @@ function Profile(props) {
             {props.pass || 1 ? <MaterialIcons name="key" style={styles.green} size={32} /> : null }
             </View>
             <View style={styles.memberData}>
-                <Text style={styles.headerText}>{userData[0].sfname + " " + userData[0].slname}</Text>
-                <Text style={[styles.headerText, styles.member]}>{ userData[0].levelName}</Text>
+                <Text style={styles.headerText}>{userData.sfname + " " + userData.slname}</Text>
+                <Text style={[styles.headerText, styles.member]}>{ userData.levelName}</Text>
             </View>
             <View style={styles.memberData}>
                 <Text style={[styles.headerText, styles.highlight]}>{dayjs(props.date).format('ddd MMMM D, YYYY')}</Text>
-                <Text style={[styles.headerText, styles.member]}>since {dayjs(userData[0].created_at).format('MMM YYYY')}</Text>
+                <Text style={[styles.headerText, styles.member]}>since {dayjs(userData.created_at).format('MMM YYYY')}</Text>
             </View>
         </View>
     );

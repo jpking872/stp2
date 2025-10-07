@@ -5,4 +5,4 @@ global.HIGHLIGHT = '#E37405';
 global.GREEN = '#0FA630';
 global.ERROR = '#F20202';
 
-export const API_URL = "http://skateapi.kingjonathan.com";
+export const API_URL = "https://skatetothepointadmin.com";

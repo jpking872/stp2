@@ -14,7 +14,7 @@ import SkateText from './SkateText';
 
 function Classes() {
 
-    const signupDate = dayjs('2025-07-16 09:30:00').format('YYYY-MM-DD');
+    const signupDate = dayjs().format('YYYY-MM-DD');
 
     const [classes, setClasses] = useState([]); // State to store fetched data
     const [registered, setRegistered] = useState([]); // State to store fetched data
@@ -144,8 +144,7 @@ function Classes() {
 
     function renderBook(i) {
 
-        //const now = dayjs();
-        const now = dayjs('2025-07-16 09:30:00');
+        const now = dayjs();
 
         let sessionTime = dayjs(classes[i].start);
         let regSessionTime = dayjs(classes[i].start).add(30, 'minute');

@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
     default: {
         fontSize: Platform.select({
                 ios: 14,
-                android: 16
+                android: 14
             }), // Set your default size here
         fontFamily: Platform.select({
             ios: 'San Francisco',

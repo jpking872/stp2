@@ -11,7 +11,7 @@ export const AuthProvider = ({ children }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [userData, setUserData] = useState([]);
     //const [signupDate, setSignupDate] = useState(dayjs());
-    const [signupDate, setSignupDate] = useState(dayjs('2025-07-16 09:30:00').format('YYYY-MM-DD'));
+    const [signupDate, setSignupDate] = useState(dayjs().format('YYYY-MM-DD'));
 
     useEffect(() => {
 
