@@ -6,21 +6,24 @@ import './utils/global';
 import { AuthProvider, AuthContext } from './context/AuthContext';
 import PublicStack from './navigation/PublicStack';
 import PrivateStack from './navigation/PrivateStack';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
   export default function App() {
 
     return (
 
-      <AuthProvider>
-      <NavigationContainer style={styles.container}>
-          <Header title="Skate to the Point" />
-          <AuthContext.Consumer>
-              {({ isAuthenticated }) =>
-                  isAuthenticated ? <PrivateStack /> : <PublicStack />
-              }
-          </AuthContext.Consumer>
-        </NavigationContainer>
-      </AuthProvider>
+        <SafeAreaProvider>
+          <AuthProvider>
+          <NavigationContainer style={styles.container}>
+              <Header title="Skate to the Point" />
+              <AuthContext.Consumer>
+                  {({ isAuthenticated }) =>
+                      isAuthenticated ? <PrivateStack /> : <PublicStack />
+                  }
+              </AuthContext.Consumer>
+            </NavigationContainer>
+          </AuthProvider>
+        </SafeAreaProvider>
     );
   }
 

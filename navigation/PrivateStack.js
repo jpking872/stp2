@@ -27,6 +27,9 @@ function PrivateStack() {
                 }
                 return <MaterialIcons name={iconName} size={30} color={global.DARK_COLOR} />
             },
+            tabBarStyle: {
+                backgroundColor:'#EDEDED'
+            },
             tabBarActiveTintColor: global.HIGHLIGHT,
             tabBarInactiveTintColor: 'gray',
             headerShown: false

@@ -4,6 +4,7 @@ import '../utils/global';
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import dayjs from "dayjs";
 import {useAuth} from "../context/AuthContext";
+import SkateText from './SkateText';
 
 function Profile(props) {
 
@@ -17,12 +18,12 @@ function Profile(props) {
             {props.pass || 1 ? <MaterialIcons name="key" style={styles.green} size={32} /> : null }
             </View>
             <View style={styles.memberData}>
-                <Text style={styles.headerText}>{userData.sfname + " " + userData.slname}</Text>
-                <Text style={[styles.headerText, styles.member]}>{ userData.levelName}</Text>
+                <SkateText style={styles.headerText}>{userData.sfname + " " + userData.slname}</SkateText>
+                <SkateText style={[styles.headerText, styles.member]}>{ userData.levelName}</SkateText>
             </View>
             <View style={styles.memberData}>
-                <Text style={[styles.headerText, styles.highlight]}>{dayjs(props.date).format('ddd MMMM D, YYYY')}</Text>
-                <Text style={[styles.headerText, styles.member]}>since {dayjs(userData.created_at).format('MMM YYYY')}</Text>
+                <SkateText style={[styles.headerText, styles.highlight]}>{dayjs(props.date).format('ddd MMMM D, YYYY')}</SkateText>
+                <SkateText style={[styles.headerText, styles.member]}>since {dayjs(userData.created_at).format('MMM YYYY')}</SkateText>
             </View>
         </View>
     );

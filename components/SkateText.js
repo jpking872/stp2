@@ -8,7 +8,7 @@ const SkateText = ({ style, ...props }) => {
 const styles = StyleSheet.create({
     default: {
         fontSize: Platform.select({
-                ios: 14,
+                ios: 12,
                 android: 14
             }), // Set your default size here
         fontFamily: Platform.select({

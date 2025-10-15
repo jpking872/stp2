@@ -291,21 +291,18 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'left',
         marginVertical: 0,
-        paddingVertical: 0,
-        fontSize: 14
+        paddingVertical: 0
     },
     summaryDate: {
-        width: '26%',
-        paddingLeft: 5,
-        fontSize:14
+        width: '27%',
+        paddingLeft: 5
 
     },
     summaryTitle: {
         width: '64%',
         marginLeft:5,
         marginRight:5,
-        color: global.DARK_COLOR,
-        fontSize:14
+        color: global.DARK_COLOR
     },
     summaryNumber: {
         width: '10%',

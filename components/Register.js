@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { Text, StyleSheet, View, Platform, KeyboardAvoidingView } from 'react-native';
+import { Text, StyleSheet, View, Platform, KeyboardAvoidingView, ScrollView } from 'react-native';
 import * as Constants from '../utils/global';
 import * as Utils from '../utils/functions';
 import axios from "axios";
@@ -100,7 +100,10 @@ function Register() {
     }
 
     return (
-        <View style={styles.container}>
+        <KeyboardAvoidingView
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            style={styles.container}>
+        <ScrollView style={styles.scrollView}>
             <Text style={styles.headerText}>Create an Account</Text>
                 { message ? (<Text style={styles.item}>{message}</Text>) : null }
                 { validateError.length > 0 ? (<Text style={styles.item}>{validateError.join("\n")}</Text>) : null }
@@ -115,16 +118,20 @@ function Register() {
                     <SkateButton title="Sign Up" color={global.DARK_COLOR} onPress={handleRegister} disabled={false} />
                 </View>
                 <SkateLink title="Return to sign in" destination="Login" />
-        </View>
+        </ScrollView>
+        </KeyboardAvoidingView>
     )
 
 }
 
 const styles = StyleSheet.create({
     container: {
+        flex: 1
+    },
+    scrollView: {
         marginTop: 30,
         marginHorizontal: 25,
-        padding: 0
+        padding: 5
     },
     headerText: {
         fontSize: 20,
