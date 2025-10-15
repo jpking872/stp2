@@ -4,6 +4,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { View, Button, Platform } from 'react-native';
 import SkateButton from './SkateButton';
+import SkateGesture from './SkateGesture';
 import '../utils/global';
 
 function Calendar({onUpdate}) {
@@ -22,7 +23,7 @@ function Calendar({onUpdate}) {
 
     return (
             <View>
-                <SkateButton title="Choose Date" color={global.DARK_COLOR} onPress={showPicker} />
+                <SkateGesture title="Choose Date" color={global.DARK_COLOR} onPress={showPicker} />
                 <DateTimePickerModal
                     mode="date"
                     display="default"

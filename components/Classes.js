@@ -7,10 +7,11 @@ import * as Constants from '../utils/global';
 import dayjs from 'dayjs';
 import * as React from "react";
 import Calendar from './Calendar';
-import SkateButton from './SkateButton';
+import SkateGesture from './SkateGesture';
 import Loading from './Loading';
 import Profile from './Profile';
 import SkateText from './SkateText';
+import ConfirmBox from "./ConfirmBox";
 
 function Classes() {
 
@@ -26,6 +27,8 @@ function Classes() {
     const [loading, setLoading] = useState(true); // State for loading indicator
     const [error, setError] = useState(null); // State for error handling
     const [reload, setReload] = useState(false);
+    const [showConfirm, setShowConfirm] = useState(false);
+    const [confirmBoxMessage, setConfirmBoxMessage] = useState("");
     const availableSessions = useRef(0);
     availableSessions.count = 0;
 
@@ -116,6 +119,15 @@ function Classes() {
         return originalRegistered.indexOf(classes[i].id) !== -1;
     }
 
+    function toggleConfirmBox() {
+        let tmpShow = !showConfirm;
+        setShowConfirm(tmpShow);
+        let adds1 = registered.length === 1 ? "" : "es";
+        let adds2 = originalRegistered.length === 1 ? "" : "es";
+        setConfirmBoxMessage("Yes I want to sign up for " + registered.length + " class" + adds1 + " on the week of " +
+            dayjs(signupDate).format("MMM D") + ". I was previously registered for " + originalRegistered.length + " class" + adds2 + ".");
+    }
+
     function clickedBook(i) {
         const regIndex = registered.indexOf(classes[i].id);
         const regCopy = registered.slice();
@@ -192,6 +204,7 @@ function Classes() {
     return (
 
         <View style={styles.container}>
+            <ConfirmBox visible={showConfirm} message={confirmBoxMessage} onPress={handleSignup} hideModal={toggleConfirmBox}></ConfirmBox>
             <Profile pass={false} date={signupDate}/>
             <ScrollView style={styles.sessionScroll}>
                 { classes && registered && classes.length ? (
@@ -204,7 +217,7 @@ function Classes() {
                     <View style={styles.indentText}><SkateText>No classes today</SkateText></View>
                 )}
             </ScrollView>
-            <SkateButton title={"Signup (" + registered.length + ")"} color={global.DARK_COLOR} onPress={handleSignup} disabled={ availableSessions.count == 0}/>
+            <SkateGesture title={"Signup (" + registered.length + ")"} color={global.DARK_COLOR} onPress={toggleConfirmBox} disabled={ availableSessions.count == 0}/>
             <View style={styles.accountView}>
                 <SkateText style={styles.accountText}>Freestyles: {accountData.numFree}<SkateText style={styles.green }>({accountData.numFreePass})</SkateText><SkateText style={styles.highlight}> | </SkateText>Classes: {accountData.numClasses}<SkateText style={styles.highlight}> | </SkateText>Purchased: {accountData.adjustments}</SkateText>
                 <SkateText style={styles.accountText}>Balance: <SkateText style={ balance <= 0 ? styles.error: null }>{balance}</SkateText></SkateText>

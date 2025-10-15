@@ -7,13 +7,15 @@ import { AuthProvider, AuthContext } from './context/AuthContext';
 import PublicStack from './navigation/PublicStack';
 import PrivateStack from './navigation/PrivateStack';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
 
   export default function App() {
 
     return (
 
         <SafeAreaProvider>
-          <AuthProvider>
+            <GestureHandlerRootView style={{ flex: 1 }}>
+            <AuthProvider>
           <NavigationContainer style={styles.container}>
               <Header title="Skate to the Point" />
               <AuthContext.Consumer>
@@ -23,6 +25,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
               </AuthContext.Consumer>
             </NavigationContainer>
           </AuthProvider>
+            </GestureHandlerRootView>
         </SafeAreaProvider>
     );
   }
