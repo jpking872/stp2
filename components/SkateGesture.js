@@ -7,11 +7,11 @@ function SkateGesture(props) {
 
     const styles = createStyles(props);
 
-    const tapGesture = Gesture.Tap().numberOfTaps(2).onStart(props.onPress)
+    const tapGesture = props.disabled ? Gesture.Tap().enabled(false) : Gesture.Tap().numberOfTaps(2).onStart(props.onPress)
 
     return (
         <GestureDetector gesture={tapGesture}>
-            <TouchableOpacity style={styles.button} disabled={props.disabled}>
+            <TouchableOpacity style={styles.button}>
                 <Text style={styles.text}>{props.title}</Text>
             </TouchableOpacity>
         </GestureDetector>

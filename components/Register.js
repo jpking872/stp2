@@ -131,7 +131,8 @@ const styles = StyleSheet.create({
     scrollView: {
         marginTop: 30,
         marginHorizontal: 25,
-        padding: 5
+        padding: 5,
+        flexGrow: 1
     },
     headerText: {
         fontSize: 20,

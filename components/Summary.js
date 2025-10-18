@@ -245,7 +245,7 @@ function Summary() {
                         <SkateText style={styles.historyDate}>{dayjs(h.year + "-" + h.month + "-01").format('MMM YYYY')}</SkateText>
                         <SkateText style={ styles.historyLargeNumber }>{h.freestyles}-{h.freestyles_pass}</SkateText>
                         <SkateText style={ styles.historyNumber }>{h.classes}</SkateText>
-                        <SkateText style={ styles.historyNumber }>{h.passes}</SkateText>
+                        <SkateText style={ styles.historyNumber }>{h.passes > 0 ? "Y" : "-"}</SkateText>
                         <SkateText style={ styles.historyNumber }>{h.adjustments}</SkateText>
                         <SkateText style={ styles.historyNumber }>{h.amount}</SkateText>
                     </View>

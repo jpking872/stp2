@@ -1,11 +1,19 @@
-import React from 'react';
+import { React, useEffect } from 'react';
 import { View, Text, StyleSheet, Image, Platform } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 
 function Header({title}) {
 
+    const insets = useSafeAreaInsets();
+    const styles = createStyles(insets);
+
+    useEffect(() => {
+        console.log('Safe area insets:', insets, 'platform:' , Platform.OS)
+    }, [insets]);
+
+
     return (
-            <SafeAreaView style={styles.safeView}>
+            <SafeAreaView edges={['left', 'right', 'bottom']} style={styles.safeView}>
                 <View style={styles.container}>
                     <Image source={require('../assets/appHeader5.jpg')} style={styles.headerImage} />
                 </View>
@@ -14,26 +22,20 @@ function Header({title}) {
 
 }
 
-
-const styles = StyleSheet.create({
+const createStyles = (insets) => StyleSheet.create({
     safeView: {
-        height:57,
-        margin:0,
-        paddingBottom:9
+        marginTop: insets.top,
+        height:57
     },
     container: {
-        height:57,
         margin: 0,
-        padding: 0,
         alignItems: 'center',
         backgroundColor: global.DARK_COLOR
     },
     headerImage: {
-        width: 600,
-        height:57,
+        width: '100%',
         margin:0,
         padding:0
-
     },
     headerText: {
         fontSize:24,

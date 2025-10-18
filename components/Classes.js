@@ -124,7 +124,7 @@ function Classes() {
         setShowConfirm(tmpShow);
         let adds1 = registered.length === 1 ? "" : "es";
         let adds2 = originalRegistered.length === 1 ? "" : "es";
-        setConfirmBoxMessage("Yes I want to sign up for " + registered.length + " class" + adds1 + " on the week of " +
+        setConfirmBoxMessage("Sign me up for " + registered.length + " class" + adds1 + " on the week of " +
             dayjs(signupDate).format("MMM D") + ". I was previously registered for " + originalRegistered.length + " class" + adds2 + ".");
     }
 

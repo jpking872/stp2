@@ -12,6 +12,7 @@ function ConfirmBox(props) {
                 <View style={styles.overlay}>
                     <View style={styles.modal}>
                         <Text>{props.message}</Text>
+                        <View style={styles.group}>
                         <View style={styles.actions}>
                             <TouchableOpacity style={styles.buttons} title="Cancel" onPress={props.hideModal} >
                                 <Text style={styles.text}>Cancel</Text>
@@ -24,6 +25,7 @@ function ConfirmBox(props) {
                             </TouchableOpacity>
                         </View>
                     </View>
+                </View>
                 </View>
             </Modal>
         </View>
@@ -48,6 +50,9 @@ function ConfirmBox(props) {
             flexDirection: 'row',
             alignItems: 'center',
             marginTop: 20,
+        },
+        group: {
+            alignItems: 'center'
         },
         text: {
           color: '#FFFFFF',

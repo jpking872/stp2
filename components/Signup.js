@@ -183,7 +183,7 @@ function Signup() {
         setShowConfirm(tmpShow);
         let adds1 = registered.length === 1 ? "" : "s";
         let adds2 = originalRegistered.length === 1 ? "" : "s";
-        setConfirmBoxMessage("Yes I want to sign up for " + registered.length + " freestyle" + adds1 + " on " +
+        setConfirmBoxMessage("Sign me up for " + registered.length + " freestyle" + adds1 + " on " +
             dayjs(signupDate).format("MMM D") + ". I was previously registered for " + originalRegistered.length + " freestyle" + adds2 + ".");
     }
 

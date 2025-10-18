@@ -14,23 +14,26 @@ function Calendar({onUpdate}) {
 
     const showPicker = () => setIsVisible(true);
     const hidePicker = () => setIsVisible(false);
-    const handleConfirm = (selectedDate) => {
+    const handleConfirm = (dateEvent) => {
+        let selectedDate = dateEvent.nativeEvent.timestamp;
         const currentDate = selectedDate || date;
         const formattedDate = dayjs(currentDate).format('YYYY-MM-DD'); // Format the date
         onUpdate(formattedDate);
         setDate(currentDate);
+        hidePicker();
     };
 
     return (
             <View>
                 <SkateGesture title="Choose Date" color={global.DARK_COLOR} onPress={showPicker} />
-                <DateTimePickerModal
+                {isVisible && (
+                <DateTimePicker
                     mode="date"
-                    display="default"
-                    onConfirm={handleConfirm}
-                    onCancel={hidePicker}
-                    isVisible={isVisible}
+                    value={date}
+                    display="inline"
+                    onChange={handleConfirm}
                 />
+                )}
             </View>
     )
 

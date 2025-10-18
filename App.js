@@ -16,8 +16,8 @@ import {GestureHandlerRootView} from 'react-native-gesture-handler';
         <SafeAreaProvider>
             <GestureHandlerRootView style={{ flex: 1 }}>
             <AuthProvider>
-          <NavigationContainer style={styles.container}>
-              <Header title="Skate to the Point" />
+            <Header title="Skate to the Point" />
+            <NavigationContainer style={styles.container}>
               <AuthContext.Consumer>
                   {({ isAuthenticated }) =>
                       isAuthenticated ? <PrivateStack /> : <PublicStack />
@@ -35,10 +35,5 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: global.BG_COLOR,
     alignItems: 'center',
-    justifyContent: 'center',
-    padding: Platform.select({
-      ios: 25,
-      android: 14
-    }),
   },
 });
