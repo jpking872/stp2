@@ -134,20 +134,6 @@ function Summary() {
 
     }, []);
 
-    const logoutPressed = async () => await axios.get(
-        Constants.API_URL + "/api/logout", {
-            headers: {
-                Authorization: "Bearer " + skaterToken
-            }
-        })
-        .then((res) => {
-            if (res.data) {
-                Utils.deleteStore("skaterToken");
-                logout();
-            }
-
-    });
-
     if (loading) {
         return (
             <Loading />
@@ -177,7 +163,6 @@ function Summary() {
             </View>
         );
     }
-
 
     function RecentClassesTable() {
 
@@ -272,9 +257,6 @@ function Summary() {
                 <SkateText style={styles.accountText}>Freestyles: {accountData.numFree}<SkateText style={styles.green }>({accountData.numFreePass})</SkateText><SkateText style={styles.highlight}> | </SkateText>Classes: {accountData.numClasses}<SkateText style={styles.highlight}> | </SkateText>Purchased: {accountData.adjustments}</SkateText>
                 <SkateText style={styles.accountText}>Balance: <SkateText style={ balance <= 0 ? styles.error: null }>{balance}</SkateText></SkateText>
             </View>
-            <TouchableOpacity onPress={() => logoutPressed() }>
-                <SkateText style={styles.LogoutLink}>Logout</SkateText>
-            </TouchableOpacity>
         </View>
     );
 }

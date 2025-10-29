@@ -65,17 +65,20 @@ function Login() {
                         }
                     }
                 );
-                if (response.data.loggedin == true) {
+                if (response.data.loggedin == 'valid') {
                     setMessage("Welcome.");
                     setIsLoggedIn(true);
                     Utils.setStore('skaterToken', response.data.token);
                     login();
                     setLoading(false);
-
+                } else if (response.data.loggedin == 'not approved') {
+                    setMessage("Your account has not been approved yet.");
+                    setIsLoggedIn(false);
+                    setLoading(false);
                 } else {
                     setMessage("Invalid login.");
                     setIsLoggedIn(false);
-                    setLoading(false)
+                    setLoading(false);
                 }
             } catch (err) {
                 setError(err);

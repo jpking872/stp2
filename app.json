@@ -17,19 +17,26 @@
       "supportsTablet": true
     },
     "android": {
+      "package": "com.jking72.skatetothepoint",
+      "versionCode": 1,
+      "permissions": [],
       "adaptiveIcon": {
         "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#ffffff"
       },
       "devClient": true,
-      "edgeToEdgeEnabled": true,
-      "package": "com.jpking72.skatetothepoint"
+      "edgeToEdgeEnabled": true
     },
     "web": {
       "favicon": "./assets/favicon.ico"
     },
     "plugins": [
       "expo-secure-store"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "1b729e14-8dd6-4091-ba6d-ca2c34a82122"
+      }
+    }
   }
 }

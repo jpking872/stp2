@@ -24,7 +24,7 @@ import {GestureHandlerRootView} from 'react-native-gesture-handler';
                   }
               </AuthContext.Consumer>
             </NavigationContainer>
-          </AuthProvider>
+            </AuthProvider>
             </GestureHandlerRootView>
         </SafeAreaProvider>
     );
