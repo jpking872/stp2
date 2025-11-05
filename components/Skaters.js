@@ -5,7 +5,7 @@ import * as Utils from "../utils/functions";
 import * as Constants from '../utils/global';
 import dayjs from 'dayjs';
 import Calendar from "./Calendar";
-import { StyleSheet, Text, View, FlatList, Button, TouchableOpacity, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, FlatList, Button, TouchableOpacity, ScrollView, useWindowDimensions } from 'react-native';
 import SkateButton from './SkateButton';
 import Loading from './Loading';
 import { DataTable } from 'react-native-paper';
@@ -20,8 +20,12 @@ function Skaters() {
     const [sessions, setSessions] = useState("");
     const [skaters, setSkaters] = useState([]);
     const [classes, setClasses] = useState([]);
-    const [loading, setLoading] = useState(true); // State for loading indicator
-    const [error, setError] = useState(null); // State for error handling
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    const { width, height } = useWindowDimensions();
+    const isTablet = width >= 768;
+    const styles = createStyles({ isTablet: isTablet})
 
     const skaterToken = Utils.getStore('skaterToken');
     console.log("Skaters:" + skaterToken);
@@ -156,7 +160,8 @@ function Skaters() {
 
 }
 
-const styles = StyleSheet.create({
+const createStyles = (styleVars) =>
+    StyleSheet.create({
     container: {
         flex: 1,
         height: '100%',
@@ -167,10 +172,12 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'left',
         marginVertical: 0,
-        paddingVertical:3
+        paddingVertical:3,
+        flexDirection: styleVars.isTablet ? 'row' : 'column'
     },
     skaterName: {
-        paddingLeft: 5
+        paddingLeft: 5,
+        width:'30%'
 
     },
     skaterSessions: {
@@ -208,6 +215,6 @@ const styles = StyleSheet.create({
         paddingHorizontal: 5,
         color: global.DARK_COLOR
     }
-})
+});
 
 export default Skaters;

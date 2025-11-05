@@ -14,14 +14,14 @@ function ConfirmBox(props) {
                         <Text>{props.message}</Text>
                         <View style={styles.group}>
                         <View style={styles.actions}>
-                            <TouchableOpacity style={styles.buttons} title="Cancel" onPress={props.hideModal} >
-                                <Text style={styles.text}>Cancel</Text>
-                            </TouchableOpacity>
                             <TouchableOpacity style={styles.buttons} title="Confirm" onPress={() => {
                                 props.onPress();
                                 props.hideModal();
                             }}>
-                                <Text style={styles.text}>Confirm</Text>
+                                <Text style={styles.text}>Yes</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.buttons} title="Cancel" onPress={props.hideModal} >
+                                <Text style={styles.text}>No</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
