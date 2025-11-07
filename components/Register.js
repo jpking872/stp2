@@ -90,16 +90,20 @@ function Register() {
                         }
                     }
                 );
-                if (response.data.registered === true) {
+                if (response.data.registered === "valid") {
                     console.log(response.data)
                     setMessage("Welcome.");
                     setLoading(false);
                     navigation.navigate('Login');
+                } else if (response.data.registered === "authcode not found") {
+                    setMessage("Invalid auth code");
+                    setLoading(false);
                 } else {
                     setMessage("Invalid registration.");
                     setLoading(false)
                 }
             } catch (err) {
+                setLoading(false);
                 setError(err);
             }
         }
