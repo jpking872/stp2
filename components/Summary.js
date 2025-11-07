@@ -175,7 +175,8 @@ function Summary() {
                     classes.map((c, index) => (
                         <View key={index} style={styles.summaryRow}>
                             <SkateText style={styles.summaryDate}>{dayjs(c.classDate).format('MMM D, YYYY')}</SkateText>
-                            <SkateText style={styles.summaryClass}>{c.classTitle}</SkateText>
+                            <SkateText style={styles.summaryTitle}>{c.classTitle}</SkateText>
+                            <SkateText style={styles.summaryNumber }>2</SkateText>
                         </View>
                     ))): (
                     <SkateText style={styles.centerText}>No classes</SkateText>
@@ -281,16 +282,17 @@ const styles = StyleSheet.create({
 
     },
     summaryTitle: {
-        width: '64%',
+        width: '58%',
         marginLeft:5,
         marginRight:5,
         color: global.DARK_COLOR
     },
     summaryNumber: {
-        width: '10%',
+        width: '8%',
         marginLeft:5,
         marginRight:5,
-        color: global.DARK_COLOR
+        color: global.DARK_COLOR,
+        textAlign: 'right'
     },
     summaryClass: {
         width: '70%',
