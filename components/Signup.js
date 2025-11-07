@@ -31,8 +31,6 @@ function Signup() {
     const [reload, setReload] = useState(false);
     const [showConfirm, setShowConfirm] = useState(false);
     const [confirmBoxMessage, setConfirmBoxMessage] = useState("");
-    const availableSessions = useRef(0);
-    availableSessions.count = 0;
 
     const skaterToken = Utils.getStore('skaterToken');
     console.log("Signup:" + skaterToken);
@@ -167,7 +165,6 @@ function Signup() {
         } else if (sessions[i].count >= sessions[i].size || (accountData.balance < 0 && !passThisDay) || (!isRegistered(i) && now.isAfter(regSessionTime))) {
             content = <MaterialIcons name="clear" style={styles.lightColor} size={45} />
         } else {
-            availableSessions.count += 1;
             content = <TouchableOpacity onPress={() => clickedSkate(i)}>
                             <MaterialIcons name="ice-skating" style={isRegistered(i) ? styles.darkColor : styles.lightColor } size={45} />
                      </TouchableOpacity>
@@ -225,6 +222,7 @@ function Signup() {
         <View style={styles.container}>
             <ConfirmBox visible={showConfirm} message={confirmBoxMessage} onPress={handleSignup} hideModal={toggleConfirmBox}></ConfirmBox>
             <Profile pass={false} date={signupDate}/>
+            { balance < 0 && <SkateText style={styles.statusMessage}>Balance is too low.</SkateText>}
             <ScrollView style={styles.sessionScroll}>
                 {sessions && sessions.length ? (
                 sessions.map((item, index) => (
@@ -236,7 +234,7 @@ function Signup() {
                     <View style={styles.indentText}><SkateText>No freestyles today</SkateText></View>
                 )}
             </ScrollView>
-            <SkateGesture title={"Signup (" + registered.length + ")"} color={global.DARK_COLOR} onPress={toggleConfirmBox} disabled={ availableSessions.count == 0}/>
+            <SkateGesture title={"Signup (" + registered.length + ")"} color={global.DARK_COLOR} onPress={toggleConfirmBox} disabled={ balance < 0 }/>
             <View style={styles.accountView}>
                 <SkateText style={styles.accountText}>Freestyles: {accountData.numFree}<SkateText style={styles.green }>({accountData.numFreePass})</SkateText><SkateText style={styles.highlight}> | </SkateText>Classes: {accountData.numClasses}<SkateText style={styles.highlight}> | </SkateText>Purchased: {accountData.adjustments}</SkateText>
                 <SkateText style={styles.accountText}>Balance: <SkateText style={ balance <= 0 ? styles.error: null }>{balance}</SkateText></SkateText>
@@ -284,6 +282,11 @@ function Signup() {
         },
         title: {
             fontSize: 32,
+        },
+        statusMessage : {
+          color: global.ERROR,
+          marginTop: 5,
+          marginLeft: 5
         },
         highlight: {
             color: global.HIGHLIGHT

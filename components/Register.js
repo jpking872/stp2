@@ -15,6 +15,7 @@ function Register() {
     const [parentLast, setParentLast] = useState('');
     const [skaterFirst, setSkaterFirst] = useState('');
     const [skaterLast, setSkaterLast] = useState('');
+    const [authCode, setAuthCode] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [passwordConf, setPasswordConf] = useState('');
@@ -41,6 +42,11 @@ function Register() {
         }
         if (!skaterLast) {
             newErrors.push('Skater last name is required');
+        }
+        if (!authCode) {
+            newErrors.push('Auth code is required');
+        } else if (authCode.length != 6) {
+            newErrors.push('Auth code must be 6 characters');
         }
         if (!email) {
             newErrors.push('Email is required');
@@ -73,7 +79,8 @@ function Register() {
                         parentlast: parentLast,
                         email: email,
                         password: password,
-                        password_confirmation: passwordConf
+                        password_confirmation: passwordConf,
+                        authcode: authCode
 
                     },
                     {
@@ -114,6 +121,7 @@ function Register() {
                 <TextInput style={styles.item} label="*Email" mode="outlined" required onChangeText={setEmail} value={email}/>
                 <TextInput style={styles.item} label="*Password" mode="outlined" required onChangeText={setPassword} value={password} secureTextEntry/>
                 <TextInput style={styles.item} label="*Password Confirmation" required mode="outlined" onChangeText={setPasswordConf} value={passwordConf} secureTextEntry/>
+                <TextInput style={styles.item} label="*Auth Code" required mode="outlined" onChangeText={setAuthCode} value={authCode} />
                 <View style={styles.item}>
                     <SkateButton title="Sign Up" color={global.DARK_COLOR} onPress={handleRegister} disabled={false} />
                 </View>

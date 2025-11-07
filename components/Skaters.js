@@ -177,7 +177,7 @@ const createStyles = (styleVars) =>
     },
     skaterName: {
         paddingLeft: 5,
-        width:'30%'
+        width: styleVars.isTablet ? '30%' : '100%'
 
     },
     skaterSessions: {
