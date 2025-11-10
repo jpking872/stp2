@@ -22,6 +22,11 @@
     "production": {
       "android" : {
         "track": "production"
+      },
+      "ios": {
+        "appleId": "kingjon90@gmail.com",
+        "ascAppId": "6755054598",
+        "appleTeamId": "J3J26WVLBU"
       }
     }
   }

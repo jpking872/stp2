@@ -125,7 +125,7 @@ function Register() {
                 <TextInput style={styles.item} label="*Email" mode="outlined" required onChangeText={setEmail} value={email}/>
                 <TextInput style={styles.item} label="*Password" mode="outlined" required onChangeText={setPassword} value={password} secureTextEntry/>
                 <TextInput style={styles.item} label="*Password Confirmation" required mode="outlined" onChangeText={setPasswordConf} value={passwordConf} secureTextEntry/>
-                <TextInput style={styles.item} label="*Auth Code" required mode="outlined" onChangeText={setAuthCode} value={authCode} />
+                <TextInput style={styles.item} label="*Auth Code" required mode="outlined" onChangeText={setAuthCode} value={authCode} autoCapitalize="none" autoCorrect={false} />
                 <View style={styles.item}>
                     <SkateButton title="Sign Up" color={global.DARK_COLOR} onPress={handleRegister} disabled={false} />
                 </View>

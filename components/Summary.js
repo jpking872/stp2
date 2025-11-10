@@ -277,12 +277,12 @@ const styles = StyleSheet.create({
         paddingVertical: 0
     },
     summaryDate: {
-        width: '27%',
+        width: '30%',
         paddingLeft: 5
 
     },
     summaryTitle: {
-        width: '58%',
+        width: '55%',
         marginLeft:5,
         marginRight:5,
         color: global.DARK_COLOR
