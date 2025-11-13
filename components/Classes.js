@@ -29,6 +29,8 @@ function Classes() {
     const [reload, setReload] = useState(false);
     const [showConfirm, setShowConfirm] = useState(false);
     const [confirmBoxMessage, setConfirmBoxMessage] = useState("");
+    const availableSessions = useRef(0);
+    availableSessions.count = 0;
 
     const skaterToken = Utils.getStore('skaterToken');
     console.log("Classes:" + skaterToken);
@@ -165,6 +167,7 @@ function Classes() {
         } else if (classes[i].count >= classes[i].size || (accountData.balance < 0 && !passThisDay) || (!isRegistered(i) && now.isAfter(regSessionTime))) {
             content = <MaterialIcons name="clear" style={styles.lightColor} size={45} />
         } else {
+            availableSessions.count += 1;
             content = <TouchableOpacity onPress={() => clickedBook(i)}>
                 <MaterialIcons name="ice-skating" style={isRegistered(i) ? styles.darkColor : styles.lightColor } size={45} />
             </TouchableOpacity>
@@ -215,7 +218,7 @@ function Classes() {
                     <View style={styles.indentText}><SkateText>No classes today</SkateText></View>
                 )}
             </ScrollView>
-            <SkateGesture title={"Signup (" + registered.length + ")"} color={global.DARK_COLOR} onPress={toggleConfirmBox} disabled={ balance < 0}/>
+            <SkateGesture title={"Signup (" + registered.length + ")"} color={global.DARK_COLOR} onPress={toggleConfirmBox} disabled={ availableSessions.count == 0 || balance < 0}/>
             <View style={styles.accountView}>
                 <SkateText style={styles.accountText}>Freestyles: {accountData.numFree}<SkateText style={styles.green }>({accountData.numFreePass})</SkateText><SkateText style={styles.highlight}> | </SkateText>Classes: {accountData.numClasses}<SkateText style={styles.highlight}> | </SkateText>Purchased: {accountData.adjustments}</SkateText>
                 <SkateText style={styles.accountText}>Balance: <SkateText style={ balance <= 0 ? styles.error: null }>{balance}</SkateText></SkateText>

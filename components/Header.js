@@ -15,7 +15,7 @@ function Header({title}) {
     return (
             <SafeAreaView edges={['left', 'right', 'bottom']} style={styles.safeView}>
                 <View style={styles.container}>
-                    <ImageBackground source={require('../assets/appHeader6.png')} style={styles.headerImage} >
+                    <ImageBackground source={require('../assets/appHeader7.png')} style={styles.headerImage} >
                         <View style={styles.overlay}>
                             <Text style={styles.headerText}>Ice Skate Memorial City</Text>
                         </View>

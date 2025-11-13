@@ -21,7 +21,7 @@ function HomeScreen() {
 
     return (
         <View style={styles.container}>
-            <Image source={require('../assets/homescreen.png')} style={styles.headerImage} />
+            <Image source={require('../assets/icon.png')} style={styles.headerImage} />
             { isAuthenticated ? null : (
                 <View>
                     <View style={{ marginBottom: 15 }}><SkateButton title="Sign in" color={global.DARK_COLOR} onPress={gotoLogin} disabled={false} /></View>
