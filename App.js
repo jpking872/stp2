@@ -12,7 +12,7 @@ import {GestureHandlerRootView} from 'react-native-gesture-handler';
   export default function App() {
 
     return (
-
+        <View style={styles.app}>
         <SafeAreaProvider>
             <GestureHandlerRootView style={{ flex: 1 }}>
             <AuthProvider>
@@ -27,13 +27,21 @@ import {GestureHandlerRootView} from 'react-native-gesture-handler';
             </AuthProvider>
             </GestureHandlerRootView>
         </SafeAreaProvider>
+        </View>
+
     );
   }
 
 const styles = StyleSheet.create({
+    app: {
+        width: Platform.OS === 'web' ? 440 : '100%',
+        height: Platform.OS === 'web' ? 800 : '100%',
+        marginHorizontal: Platform.OS === 'web' ? 'auto' : 0,
+        marginVertical: Platform.OS === 'web' ? 'auto' : 0,
+    },
   container: {
     flex: 1,
     backgroundColor: global.BG_COLOR,
-    alignItems: 'center',
+    alignItems: 'center'
   },
 });

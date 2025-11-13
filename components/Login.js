@@ -68,7 +68,7 @@ function Login() {
                 if (response.data.loggedin == 'valid') {
                     setMessage("Welcome.");
                     setIsLoggedIn(true);
-                    Utils.setStore('skaterToken', response.data.token);
+                    Utils.setStore('skaterToken', response.data.token, 7);
                     login();
                     setLoading(false);
                 } else if (response.data.loggedin == 'not approved') {

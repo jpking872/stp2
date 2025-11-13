@@ -217,8 +217,8 @@ function Summary() {
                 <SkateText style={styles.centerText}>History</SkateText>
             </View>
             <View style={[styles.summaryRow, styles.odd, styles.historyHeader]}>
-                <SkateText style={styles.historyDate}> </SkateText>
-                <SkateText style={styles.historyNumber}>Free</SkateText>
+                <SkateText style={styles.historyDate}></SkateText>
+                <SkateText style={styles.historyLargeNumber}>Free</SkateText>
                 <SkateText style={styles.historyNumber}>Class</SkateText>
                 <SkateText style={styles.historyNumber}>Pass</SkateText>
                 <SkateText style={styles.historyNumber}>Adj</SkateText>
@@ -311,7 +311,7 @@ const styles = StyleSheet.create({
     },
     historyNumber: {
         textAlign: 'center',
-        width: '11%',
+        width: '12%',
         marginLeft:5,
         marginRight:5,
         color: global.DARK_COLOR

@@ -33,7 +33,7 @@
       "edgeToEdgeEnabled": true
     },
     "web": {
-      "favicon": "./assets/favicon.ico"
+
     },
     "plugins": [
       "expo-secure-store"

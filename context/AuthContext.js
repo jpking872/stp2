@@ -3,6 +3,7 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import * as SecureStore from 'expo-secure-store';
 import axios from "axios";
 import * as Constants from '../utils/global';
+import * as Utils from '../utils/functions';
 import dayjs from 'dayjs';
 export const AuthContext = createContext({ isAuthenticated: false, userData: [] });
 
@@ -15,7 +16,7 @@ export const AuthProvider = ({ children }) => {
 
     useEffect(() => {
 
-        const skaterToken = SecureStore.getItem('skaterToken');
+        const skaterToken = Utils.getStore('skaterToken');
         console.log("Auth:" + skaterToken);
 
         const isAuth = () => {

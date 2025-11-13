@@ -64,7 +64,8 @@ function ConfirmBox(props) {
             paddingHorizontal: 18,
             borderRadius: 4,
             width:'100px',
-            marginHorizontal: 20
+            marginHorizontal: 20,
+            alignItems: 'center'
         }
     });
 
