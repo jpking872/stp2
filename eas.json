@@ -12,15 +12,17 @@
       },
       "env": {
         "EXPO_PUBLIC_API_URL": "https://skatetothepointadmin.com"
-      }
+      },
+      "channel": "production"
     },
     "preview": {
-      "distribution": "internal"
+      "distribution": "internal",
+      "channel": "preview"
     }
   },
   "submit": {
     "production": {
-      "android" : {
+      "android": {
         "track": "production"
       },
       "ios": {
