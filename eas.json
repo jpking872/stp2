@@ -23,7 +23,7 @@
   "submit": {
     "production": {
       "android": {
-        "track": "production"
+        "track": "internal"
       },
       "ios": {
         "appleId": "kingjon90@gmail.com",
