@@ -9,7 +9,12 @@ import '../utils/global';
 
 function Calendar({onUpdate}) {
 
-    const [date, setDate] = useState(new Date());
+    const today = new Date();
+    const yesterday = new Date(today);
+    yesterday.setDate(today.getDate() - 1);
+    yesterday.setHours(12, 0, 0, 0); // hours, minutes, seconds, milliseconds
+
+    const [date, setDate] = useState(yesterday);
     const [isVisible, setIsVisible] = useState(false);
 
     const showPicker = () => setIsVisible(true);
@@ -31,6 +36,7 @@ function Calendar({onUpdate}) {
                     mode="date"
                     value={date}
                     display="inline"
+                    minimumDate={yesterday}
                     onChange={handleConfirm}
                 />
                 )}
