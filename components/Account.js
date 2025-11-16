@@ -61,7 +61,7 @@ function Account() {
                 <Text style={styles.headerText}>My Account</Text>
                 { message ? (<Text style={styles.item}>{message}</Text>) : null }
                     <View style={styles.item}>
-                        <SkateGesture title="Logout" color={global.DARK_COLOR} onPress={performLogout} disabled={false} />
+                        <SkateButton title="Logout" color={global.DARK_COLOR} onPress={performLogout} disabled={false} />
                     </View>
             </View>
         )

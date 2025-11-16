@@ -25,7 +25,7 @@ function Calendar({onUpdate}) {
 
     return (
             <View>
-                <SkateGesture title="Choose Date" color={global.DARK_COLOR} onPress={showPicker} />
+                <SkateButton title="Choose Date" color={global.DARK_COLOR} onPress={showPicker} />
                 {isVisible && (
                 <DateTimePicker
                     mode="date"

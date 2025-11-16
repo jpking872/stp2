@@ -237,7 +237,7 @@ function Signup() {
                     <View style={styles.indentText}><SkateText>No freestyles today</SkateText></View>
                 )}
             </ScrollView>
-            <SkateGesture title={"Signup (" + registered.length + ")"} color={global.DARK_COLOR} onPress={toggleConfirmBox} disabled={ availableSessions.count == 0 || balance < 0 }/>
+            <SkateButton title={"Signup (" + registered.length + ")"} color={global.DARK_COLOR} onPress={toggleConfirmBox} disabled={ availableSessions.count == 0 || balance < 0 }/>
             <View style={styles.accountView}>
                 <SkateText style={styles.accountText}>Freestyles: {accountData.numFree}<SkateText style={styles.green }>({accountData.numFreePass})</SkateText><SkateText style={styles.highlight}> | </SkateText>Classes: {accountData.numClasses}<SkateText style={styles.highlight}> | </SkateText>Purchased: {accountData.adjustments}</SkateText>
                 <SkateText style={styles.accountText}>Balance: <SkateText style={ balance <= 0 ? styles.error: null }>{balance}</SkateText></SkateText>

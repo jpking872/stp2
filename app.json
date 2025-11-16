@@ -15,7 +15,7 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.jpking72.skatetothepoint",
+      "bundleIdentifier": "com.jking72.skatetothepoint",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
       },
@@ -23,7 +23,7 @@
       "runtimeVersion": "1.0.2"
     },
     "android": {
-      "package": "com.jpking72.skatetothepoint",
+      "package": "com.jking72.skatetothepoint",
       "versionCode": 5,
       "permissions": [],
       "adaptiveIcon": {
@@ -46,7 +46,9 @@
       }
     },
     "updates": {
-      "url": "https://u.expo.dev/1b729e14-8dd6-4091-ba6d-ca2c34a82122"
+      "url": "https://u.expo.dev/1b729e14-8dd6-4091-ba6d-ca2c34a82122",
+      "checkAutomatically": "ALWAYS",
+      "fallbackToCacheTimeout": 0
     }
   }
 }
