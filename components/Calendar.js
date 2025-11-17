@@ -11,7 +11,7 @@ function Calendar({onUpdate}) {
 
     const today = new Date();
     const yesterday = new Date(today);
-    yesterday.setDate(today.getDate() - 1);
+    yesterday.setDate(today.getDate() - 7);
     yesterday.setHours(12, 0, 0, 0); // hours, minutes, seconds, milliseconds
 
     const [date, setDate] = useState(yesterday);

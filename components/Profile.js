@@ -30,8 +30,8 @@ function Profile(props) {
 }
     const styles = StyleSheet.create({
         header: {
-            paddingLeft: 10,
-            paddingVertical: 3,
+            paddingLeft: 5,
+            paddingVertical: 5,
             backgroundColor: "#DDDDDD"
         },
         odd: {
@@ -44,7 +44,7 @@ function Profile(props) {
             flexDirection: 'row',
         },
         member: {
-            paddingRight: 10,
+            paddingRight: 5,
             marginLeft: 'auto'
         },
         darkColor: {

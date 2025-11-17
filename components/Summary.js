@@ -266,8 +266,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         height: '100%',
-        marginVertical: 10,
-        marginHorizontal: 10
+        margin: 8
     },
     summaryRow: {
         flex: 1,

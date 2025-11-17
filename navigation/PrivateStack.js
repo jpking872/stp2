@@ -3,6 +3,7 @@ import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import React from "react";
 import HomeScreen from '../screens/HomeScreen';
 import SkatersScreen from '../screens/SkatersScreen';
+import ScheduleScreen from '../screens/ScheduleScreen';
 import SignupScreen from '../screens/SignupScreen';
 import ClassesScreen from '../screens/ClassesScreen';
 import SummaryScreen from '../screens/SummaryScreen';
@@ -19,6 +20,8 @@ function PrivateStack() {
                     iconName = 'home';
                 } else if (route.name === 'Skaters') {
                     iconName = 'air';
+                } else if (route.name === 'Schedule') {
+                    iconName = 'event-available';
                 } else if (route.name === 'Signup') {
                     iconName = 'ice-skating';
                 } else if (route.name === 'Classes') {
@@ -39,6 +42,7 @@ function PrivateStack() {
         })}>
         <Tab.Screen name="Home" component={HomeScreen} />
         <Tab.Screen name="Skaters" component={SkatersScreen} />
+        <Tab.Screen name="Schedule" component={ScheduleScreen} />
         <Tab.Screen name="Signup" component={SignupScreen} />
         <Tab.Screen name="Classes" component={ClassesScreen} />
         <Tab.Screen name="Summary" component={SummaryScreen} />
