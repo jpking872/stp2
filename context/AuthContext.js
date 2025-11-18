@@ -4,12 +4,13 @@ import * as SecureStore from 'expo-secure-store';
 import axios from "axios";
 import * as Constants from '../utils/global';
 import dayjs from 'dayjs';
-export const AuthContext = createContext({ isAuthenticated: false, userData: [] });
+export const AuthContext = createContext({ isAuthenticated: false, userData: [], venueData: [] });
 
 export const AuthProvider = ({ children }) => {
 
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [userData, setUserData] = useState([]);
+    const [venueData, setVenueData] = useState([]);
     const [signupDate, setSignupDate] = useState(dayjs().format('YYYY-MM-DD'));
 
     useEffect(() => {
@@ -34,6 +35,7 @@ export const AuthProvider = ({ children }) => {
                 console.log("Auth response: " + response.data);
                 setIsAuthenticated(response.data === 'authenticated');
                 getUserData();
+                getVenueData();
             });
 
         }
@@ -55,6 +57,22 @@ export const AuthProvider = ({ children }) => {
             });
         }
 
+        const getVenueData = () => {
+            const response = axios.get(
+                Constants.API_URL + '/api/freestyle/venue',
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'Authorization': 'Bearer ' + skaterToken
+                    }
+                }
+            ).then(response => {
+                console.log("venueData: " + response.data);
+                setVenueData(response.data);
+            });
+        }
+
         }, [isAuthenticated]);
 
     const login = () => {
@@ -66,7 +84,7 @@ export const AuthProvider = ({ children }) => {
     }
 
     return (
-        <AuthContext.Provider value={{ isAuthenticated, login, logout, userData, signupDate, setSignupDate}}>
+        <AuthContext.Provider value={{ isAuthenticated, login, logout, userData, venueData, signupDate, setSignupDate}}>
             {children}
         </AuthContext.Provider>
     );

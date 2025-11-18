@@ -14,7 +14,7 @@ function Calendar({onUpdate}) {
     yesterday.setDate(today.getDate() - 7);
     yesterday.setHours(12, 0, 0, 0); // hours, minutes, seconds, milliseconds
 
-    const [date, setDate] = useState(yesterday);
+    const [date, setDate] = useState(today);
     const [isVisible, setIsVisible] = useState(false);
 
     const showPicker = () => setIsVisible(true);

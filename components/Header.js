@@ -1,11 +1,14 @@
 import { React, useEffect } from 'react';
 import { View, Text, StyleSheet, Image, Platform, ImageBackground } from 'react-native';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
+import {useAuth} from "../context/AuthContext";
 
 function Header({title}) {
 
     const insets = useSafeAreaInsets();
     const styles = createStyles(insets);
+
+    const { venueData } = useAuth();
 
     useEffect(() => {
         console.log('Safe area insets:', insets, 'platform:' , Platform.OS)
@@ -17,7 +20,7 @@ function Header({title}) {
                 <View style={styles.container}>
                     <ImageBackground source={require('../assets/appHeader7.png')} style={styles.headerImage} >
                         <View style={styles.overlay}>
-                            <Text style={styles.headerText}>Ice Skate Memorial City</Text>
+                            <Text style={styles.headerText}>{venueData.title}</Text>
                         </View>
                     </ImageBackground>
                 </View>
