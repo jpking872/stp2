@@ -3,7 +3,7 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import * as SecureStore from 'expo-secure-store';
 import axios from "axios";
 import * as Constants from '../utils/global';
-import dayjs from 'dayjs';
+import moment from 'moment-timezone';
 export const AuthContext = createContext({ isAuthenticated: false, userData: [], venueData: [] });
 
 export const AuthProvider = ({ children }) => {
@@ -11,7 +11,7 @@ export const AuthProvider = ({ children }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [userData, setUserData] = useState([]);
     const [venueData, setVenueData] = useState([]);
-    const [signupDate, setSignupDate] = useState(dayjs().format('YYYY-MM-DD'));
+    const [signupDate, setSignupDate] = useState(moment().format('YYYY-MM-DD'));
 
     useEffect(() => {
 
@@ -70,6 +70,7 @@ export const AuthProvider = ({ children }) => {
             ).then(response => {
                 console.log("venueData: " + response.data);
                 setVenueData(response.data);
+                moment.tz.setDefault(response.data.timezone);
             });
         }
 

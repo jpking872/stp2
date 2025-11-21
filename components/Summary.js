@@ -3,20 +3,21 @@ import axios from "axios";
 import {StyleSheet, Text, TouchableOpacity, View, ScrollView} from 'react-native';
 import * as Utils from '../utils/functions';
 import * as Constants from '../utils/global';
-import dayjs from 'dayjs';
+import moment from 'moment-timezone';
 import {useNavigation} from "@react-navigation/native";
 import {useAuth} from "../context/AuthContext";
 import Loading from './Loading';
 import Profile from './Profile';
 import Calendar from "./Calendar";
 import SkateText from './SkateText';
+import moment from 'moment-timezone';
 
 function Summary() {
 
     const navigation = useNavigation();
     const { isAuthenticated, logout } = useAuth();
 
-    const [signupDate, setSignupDate] = useState(dayjs().format('YYYY-MM-DD'));
+    const [signupDate, setSignupDate] = useState(moment().format('YYYY-MM-DD'));
     const [freestyles, setFreestyles] = useState([]);
     const [classes, setClasses] = useState([]);
     const [adjustments, setAdjustments] = useState([]);
@@ -153,7 +154,7 @@ function Summary() {
             { freestyles && freestyles.length ? (
                 freestyles.map((freestyle, index) => (
                     <View key={index} style={styles.summaryRow}>
-                        <SkateText style={styles.summaryDate}>{dayjs(freestyle.freestyleDate).format('MMM D, YYYY')}</SkateText>
+                        <SkateText style={styles.summaryDate}>{moment(freestyle.freestyleDate).format('MMM D, YYYY')}</SkateText>
                         <SkateText style={styles.summaryTitle}>{freestyle.freestyleName}</SkateText>
                         <SkateText style={ freestyle.freestylePass === 1 ? [styles.summaryNumber, styles.green] : styles.summaryNumber }>{freestyle.numSessions}</SkateText>
                     </View>
@@ -174,7 +175,7 @@ function Summary() {
                 { classes && classes.length ? (
                     classes.map((c, index) => (
                         <View key={index} style={styles.summaryRow}>
-                            <SkateText style={styles.summaryDate}>{dayjs(c.classDate).format('MMM D, YYYY')}</SkateText>
+                            <SkateText style={styles.summaryDate}>{moment(c.classDate).format('MMM D, YYYY')}</SkateText>
                             <SkateText style={styles.summaryTitle}>{c.classTitle}</SkateText>
                             <SkateText style={styles.summaryNumber }>2</SkateText>
                         </View>
@@ -196,7 +197,7 @@ function Summary() {
                 { adjustments && adjustments.length ? (
                     adjustments.map((adjustment, index) => (
                         <View key={index} style={styles.summaryRow}>
-                            <SkateText style={styles.summaryDate}>{dayjs(adjustment.actionDate).format('MMM D, YYYY')}</SkateText>
+                            <SkateText style={styles.summaryDate}>{moment(adjustment.actionDate).format('MMM D, YYYY')}</SkateText>
                             <SkateText style={styles.summaryTitle}>{adjustment.title}</SkateText>
                             <SkateText style={ styles.summaryNumber }>{adjustment.points}</SkateText>
                         </View>
@@ -228,7 +229,7 @@ function Summary() {
             { history && history.length ? (
                 history.map((h, index) => (
                     <View key={index} style={styles.summaryRow}>
-                        <SkateText style={styles.historyDate}>{dayjs(h.year + "-" + h.month + "-01").format('MMM YYYY')}</SkateText>
+                        <SkateText style={styles.historyDate}>{moment(h.year + "-" + h.month + "-01").format('MMM YYYY')}</SkateText>
                         <SkateText style={ styles.historyLargeNumber }>{h.freestyles}-{h.freestyles_pass}</SkateText>
                         <SkateText style={ styles.historyNumber }>{h.classes}</SkateText>
                         <SkateText style={ styles.historyNumber }>{h.passes > 0 ? "Y" : "-"}</SkateText>

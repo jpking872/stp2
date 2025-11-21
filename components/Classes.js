@@ -4,7 +4,7 @@ import { StyleSheet, Text, View, FlatList, Button, TouchableOpacity, ScrollView 
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import * as Utils from '../utils/functions';
 import * as Constants from '../utils/global';
-import dayjs from 'dayjs';
+import moment from 'moment-timezone';
 import * as React from "react";
 import Calendar from './Calendar';
 import SkateGesture from './SkateGesture';
@@ -16,7 +16,7 @@ import ConfirmBox from "./ConfirmBox";
 
 function Classes() {
 
-    const signupDate = dayjs().format('YYYY-MM-DD');
+    const signupDate = moment().format('YYYY-MM-DD');
 
     const [classes, setClasses] = useState([]); // State to store fetched data
     const [registered, setRegistered] = useState([]); // State to store fetched data
@@ -126,7 +126,7 @@ function Classes() {
         let adds1 = registered.length === 1 ? "" : "es";
         let adds2 = originalRegistered.length === 1 ? "" : "es";
         setConfirmBoxMessage("Sign me up for " + registered.length + " class" + adds1 + " on the week of " +
-            dayjs(signupDate).format("MMM D") + ". I was previously registered for " + originalRegistered.length + " class" + adds2 + ".");
+            moment(signupDate).format("MMM D") + ". I was previously registered for " + originalRegistered.length + " class" + adds2 + ".");
     }
 
     function clickedBook(i) {
@@ -157,10 +157,10 @@ function Classes() {
 
     function renderBook(i) {
 
-        const now = dayjs();
+        const now = moment();
 
-        let sessionTime = dayjs(classes[i].start);
-        let regSessionTime = dayjs(classes[i].start).add(30, 'minute');
+        let sessionTime = moment(classes[i].start);
+        let regSessionTime = moment(classes[i].start).add(30, 'minute');
         const passThisDay = false;
         let content;
         if (isOriginalRegistered(i) && now.isAfter(sessionTime)) {
@@ -213,7 +213,7 @@ function Classes() {
                     classes.map((item, index) => (
                         <View style={[styles.sessionRow, index % 2 === 0 ? styles.even : styles.odd]} key={item.id}>
                             <View style={styles.skateIcon}>{renderBook(index)}</View>
-                            <SkateText style={styles.skateText}>{dayjs(item.start).format('ddd MMM D h:mma')} to {dayjs(item.start).add(item.duration, 'minute').format('h:mma')}{'\n'}<SkateText style={styles.highlight}>{item.title} ({item.size - item.count} of {item.size})</SkateText></SkateText>
+                            <SkateText style={styles.skateText}>{moment(item.start).format('ddd MMM D h:mma')} to {moment(item.start).add(item.duration, 'minute').format('h:mma')}{'\n'}<SkateText style={styles.highlight}>{item.title} ({item.size - item.count} of {item.size})</SkateText></SkateText>
                         </View>
                     ))) : (
                     <View style={styles.indentText}><SkateText>No classes today</SkateText></View>

@@ -3,7 +3,7 @@ import {useEffect, useState} from "react";
 import axios from "axios";
 import * as Utils from "../utils/functions";
 import * as Constants from '../utils/global';
-import dayjs from 'dayjs';
+import moment from 'moment-timezone';
 import Calendar from "./Calendar";
 import { StyleSheet, Text, View, FlatList, Button, TouchableOpacity, ScrollView, useWindowDimensions } from 'react-native';
 import SkateButton from './SkateButton';
@@ -128,7 +128,7 @@ function Skaters() {
                 { classes && classes.length ? (
                     classes.map((c, index) => (
                     <View key={c.id} style={[styles.classRow, index % 2 === 0 ? null: styles.odd]}>
-                        <SkateText style={styles.classTitle}>{ c.title } {dayjs(c.start).format('h:mma')} - {dayjs(c.start).add(c.duration, 'minute').format('h:mma')}</SkateText>
+                        <SkateText style={styles.classTitle}>{ c.title } {moment(c.start).format('h:mma')} - {moment(c.start).add(c.duration, 'minute').format('h:mma')}</SkateText>
                         <SkateText style={styles.classParticipants}>{c.participants.length > 0 ? c.participants : "No skaters"}</SkateText>
                     </View>
                 ))) : (

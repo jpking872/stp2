@@ -13,7 +13,6 @@ import {
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import * as Utils from '../utils/functions';
 import * as Constants from '../utils/global';
-import dayjs from 'dayjs';
 import * as React from "react";
 import Calendar from './Calendar';
 import SkateGesture from './SkateGesture';

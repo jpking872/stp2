@@ -4,7 +4,7 @@ import { StyleSheet, Text, View, FlatList, Button, TouchableOpacity, ScrollView 
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import * as Utils from '../utils/functions';
 import * as Constants from '../utils/global';
-import dayjs from 'dayjs';
+import moment from 'moment-timezone';
 import * as React from "react";
 import Calendar from './Calendar';
 import SkateButton from './SkateButton';
@@ -156,10 +156,10 @@ function Signup() {
 
     function renderSkate(i) {
 
-        const now = dayjs();
+        const now = moment();
 
-        let sessionTime = dayjs(sessions[i].session_time);
-        let regSessionTime = dayjs(sessions[i].session_time).add(30, 'minute');
+        let sessionTime = moment(sessions[i].session_time);
+        let regSessionTime = moment(sessions[i].session_time).add(30, 'minute');
         const passThisDay = false;
         let content;
         if (isOriginalRegistered(i) && now.isAfter(sessionTime)) {
@@ -184,7 +184,7 @@ function Signup() {
         let adds1 = registered.length === 1 ? "" : "s";
         let adds2 = originalRegistered.length === 1 ? "" : "s";
         setConfirmBoxMessage("Sign me up for " + registered.length + " freestyle" + adds1 + " on " +
-            dayjs(signupDate).format("MMM D") + ". I was previously registered for " + originalRegistered.length + " freestyle" + adds2 + ".");
+            moment(signupDate).format("MMM D") + ". I was previously registered for " + originalRegistered.length + " freestyle" + adds2 + ".");
     }
 
     function handleSignup() {
@@ -231,7 +231,7 @@ function Signup() {
                 sessions.map((item, index) => (
                     <View style={[styles.sessionRow, index % 2 === 0 ? styles.even : styles.odd]} key={item.id}>
                         <View style={styles.skateIcon}>{renderSkate(index)}</View>
-                        <SkateText style={styles.skateText}>{dayjs(item.session_time).format('h:mma')} to {dayjs(item.session_time).add(item.duration, 'minute').format('h:mma')}{'\n'}<SkateText style={styles.highlight}>{item.name}</SkateText> ({item.count} of {item.size})</SkateText>
+                        <SkateText style={styles.skateText}>{moment(item.session_time).format('h:mma')} to {moment(item.session_time).add(item.duration, 'minute').format('h:mma')}{'\n'}<SkateText style={styles.highlight}>{item.name}</SkateText> ({item.count} of {item.size})</SkateText>
                     </View>
                 ))) : (
                     <View style={styles.indentText}><SkateText>No freestyles today</SkateText></View>

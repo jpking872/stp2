@@ -9,11 +9,10 @@ import moment from 'moment-timezone';
 function Profile(props) {
 
     const { userData, venueData } = useAuth();
-    const currentTimezone = venueData.timezone;
     const [currentTime, setCurrentTime ] = useState(getCurrentTime());
 
     function getCurrentTime() {
-        return moment().tz(currentTimezone).add(15, "second").format("h:mma");
+        return moment().add(15, "second").format("h:mma");
     }
 
     useEffect(() => {

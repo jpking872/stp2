@@ -1,11 +1,9 @@
 import React, {useState} from 'react';
-import dayjs, {Dayjs} from 'dayjs';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { View, Button, Platform } from 'react-native';
 import SkateButton from './SkateButton';
-import SkateGesture from './SkateGesture';
 import '../utils/global';
+import moment from 'moment-timezone';
 
 function Calendar({onUpdate}) {
 
@@ -22,7 +20,7 @@ function Calendar({onUpdate}) {
     const handleConfirm = (dateEvent) => {
         let selectedDate = dateEvent.nativeEvent.timestamp;
         const currentDate = selectedDate || date;
-        const formattedDate = dayjs(currentDate).format('YYYY-MM-DD'); // Format the date
+        const formattedDate = moment(currentDate).format('YYYY-MM-DD'); // Format the date
         onUpdate(formattedDate);
         setDate(currentDate);
         hidePicker();
