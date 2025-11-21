@@ -49,7 +49,7 @@ const createStyles = (insets) => StyleSheet.create({
         alignItems: 'center'
     },
     headerText: {
-        marginTop:24,
+        marginTop:26,
         fontSize:16,
         color: "#FDFDFD"
     }

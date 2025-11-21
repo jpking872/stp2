@@ -3,7 +3,6 @@ import axios from "axios";
 import {StyleSheet, Text, TouchableOpacity, View, ScrollView} from 'react-native';
 import * as Utils from '../utils/functions';
 import * as Constants from '../utils/global';
-import moment from 'moment-timezone';
 import {useNavigation} from "@react-navigation/native";
 import {useAuth} from "../context/AuthContext";
 import Loading from './Loading';
