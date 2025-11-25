@@ -86,7 +86,7 @@ function Schedule() {
                     <View style={styles.tableHeader}>
                         <SkateText>Schedule for the week</SkateText>
                     </View>
-                    {schedule && schedule.length ? (
+                    {schedule && schedule.length && (
                         schedule.map((item, index) => (
                             <View style={[styles.skaterRow, index % 2 === 0 ? null : styles.odd]} key={index}>
                                 <SkateText style={styles.skaterName}>{item.date}</SkateText>
@@ -96,13 +96,11 @@ function Schedule() {
                                 )}
                                 {item.classes && (
                                     item.classes.map((c) => (
-                                        <SkateText style={c.registered === true ? styles.registeredSessions : styles.unregisteredSessions}>{c.title} {moment(c.start).format('h:mma')} to {moment(c.start).add(c.duration, 'minute').format('h:mma')}</SkateText>
+                                        <SkateText key={c.id} style={c.registered === true ? styles.registeredSessions : styles.unregisteredSessions}>{c.title} {moment(c.start).format('h:mma')} to {moment(c.start).add(c.duration, 'minute').format('h:mma')}</SkateText>
                                     )))
                                 }
                             </View>
-                        ))) : (
-                        <View style={styles.indentText}><SkateText>No freestyles scheduled this week.</SkateText></View>
-                    )}
+                        )))}
                 </View>
             </ScrollView>
             <View>
@@ -141,7 +139,7 @@ const createStyles = (styleVars) =>
         registeredSessions: {
             marginLeft:5,
             marginRight:5,
-            color: global.GREEN
+            color: global.HIGHLIGHT
         },
         unregisteredSessions: {
             marginLeft:5,
