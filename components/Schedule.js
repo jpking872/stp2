@@ -22,6 +22,7 @@ import Profile from './Profile';
 import SkateText from './SkateText';
 import ConfirmBox from "./ConfirmBox";
 import {useAuth} from "../context/AuthContext";
+import moment from "moment-timezone";
 
 function Schedule() {
 
@@ -89,7 +90,15 @@ function Schedule() {
                         schedule.map((item, index) => (
                             <View style={[styles.skaterRow, index % 2 === 0 ? null : styles.odd]} key={index}>
                                 <SkateText style={styles.skaterName}>{item.date}</SkateText>
-                                <SkateText style={styles.skaterSessions}>{item.text}</SkateText>
+                                <SkateText style={styles.skaterSessions}>{item.scheduled}</SkateText>
+                                {item.freestyles && (
+                                    <SkateText style={styles.registeredSessions}>{item.freestyles.text}{item.freestyles.pass == 1 ? "" : ""}</SkateText>
+                                )}
+                                {item.classes && (
+                                    item.classes.map((c) => (
+                                        <SkateText style={c.registered === true ? styles.registeredSessions : styles.unregisteredSessions}>{c.title} {moment(c.start).format('h:mma')} to {moment(c.start).add(c.duration, 'minute').format('h:mma')}</SkateText>
+                                    )))
+                                }
                             </View>
                         ))) : (
                         <View style={styles.indentText}><SkateText>No freestyles scheduled this week.</SkateText></View>
@@ -125,6 +134,16 @@ const createStyles = (styleVars) =>
 
         },
         skaterSessions: {
+            marginLeft:5,
+            marginRight:5,
+            color: global.DARK_COLOR
+        },
+        registeredSessions: {
+            marginLeft:5,
+            marginRight:5,
+            color: global.GREEN
+        },
+        unregisteredSessions: {
             marginLeft:5,
             marginRight:5,
             color: global.DARK_COLOR

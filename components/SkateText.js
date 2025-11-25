@@ -1,8 +1,12 @@
 import React from 'react';
 import { Text, StyleSheet, Platform } from 'react-native';
 
-const SkateText = ({ style, ...props }) => {
-    return <Text {...props} style={[styles.default, style]} />;
+const SkateText = ({ children, style }) => {
+    return (
+        <Text style={[styles.default, style]}>
+            {children}
+        </Text>
+    );
 };
 
 const styles = StyleSheet.create({
