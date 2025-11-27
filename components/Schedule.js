@@ -124,7 +124,7 @@ const createStyles = (styleVars) =>
             alignItems: 'left',
             marginVertical: 0,
             paddingVertical:3,
-            flexDirection: styleVars.isTablet ? 'row' : 'column'
+            flexDirection: 'column'
         },
         skaterName: {
             paddingLeft: 5,

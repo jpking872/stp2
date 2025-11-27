@@ -3,7 +3,7 @@
     "name": "Skate to the Point",
     "slug": "skatetothepoint",
     "description": "Freestyle Skating Registration App",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -19,8 +19,8 @@
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
       },
-      "buildNumber": "4",
-      "runtimeVersion": "1.0.3"
+      "buildNumber": "5",
+      "runtimeVersion": "1.0.4"
     },
     "android": {
       "package": "com.jking72.skatetothepoint",
@@ -32,7 +32,7 @@
       },
       "devClient": true,
       "edgeToEdgeEnabled": true,
-      "runtimeVersion": "1.0.3"
+      "runtimeVersion": "1.0.4"
     },
     "web": {
       "favicon": "./assets/favicon.png"
