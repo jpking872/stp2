@@ -8,7 +8,6 @@ import moment from 'moment-timezone';
 import * as React from "react";
 import Calendar from './Calendar';
 import SkateButton from './SkateButton';
-import SkateGesture from './SkateGesture';
 import ConfirmBox from './ConfirmBox';
 import Loading from './Loading';
 import Profile from './Profile';
@@ -187,7 +186,7 @@ function Signup() {
             moment(signupDate).format("MMM D") + ". I was previously registered for " + originalRegistered.length + " freestyle" + adds2 + ".");
     }
 
-    function handleSignup() {
+    function handleSignup()  {
         if (balance < 0) {
             setMessage("Balance is too low");
             return;

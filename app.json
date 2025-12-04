@@ -19,7 +19,7 @@
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
       },
-      "buildNumber": "5",
+      "buildNumber": "6",
       "runtimeVersion": "1.0.4"
     },
     "android": {
@@ -46,7 +46,7 @@
       }
     },
     "updates": {
-      "url": "https://u.expo.dev/1b729e14-8dd6-4091-ba6d-ca2c34a82122",
+      "url": "https://u.expo.dev/1b729e14-8dd6-4091-ba6d-ca2c34a82122"
     }
   }
 }

@@ -18,7 +18,7 @@ function Header({title}) {
     return (
             <SafeAreaView edges={['left', 'right', 'bottom']} style={styles.safeView}>
                 <View style={styles.container}>
-                    <ImageBackground source={require('../assets/appHeader7.png')} style={styles.headerImage} >
+                    <ImageBackground source={require('../assets/appHeader8.png')} style={styles.headerImage} >
                         <View style={styles.overlay}>
                             <Text style={styles.headerText}>{venueData.title}</Text>
                         </View>
@@ -49,7 +49,7 @@ const createStyles = (insets) => StyleSheet.create({
         alignItems: 'center'
     },
     headerText: {
-        marginTop:26,
+        marginTop:24,
         fontSize:16,
         color: "#FDFDFD"
     }
