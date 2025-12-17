@@ -26,6 +26,7 @@ function SkateButton(props) {
             borderRadius: 8,
             alignItems: 'center',
             width:'100%',
+            maxWidth: 360,
             marginHorizontal: 0
         },
         text: {
