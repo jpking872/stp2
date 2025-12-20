@@ -32,6 +32,7 @@ function SkateButton(props) {
         text: {
             color: '#fff',
             fontWeight: '600',
+            'textAlign' : 'center'
         },
     });
 

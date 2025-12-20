@@ -1,13 +1,11 @@
 import React, {useState, useEffect} from 'react';
-import { Text, StyleSheet, View, ScrollView } from 'react-native';
-import { WebView } from 'react-native-webview';
+import { Text, StyleSheet, View, ScrollView, Linking } from 'react-native';
 import * as Constants  from '../utils/global';
 import * as Utils from '../utils/functions';
 import axios from "axios";
 import Loading from "./Loading";
 import SkateButton from "./SkateButton";
-import SkateLink from "./SkateLink";
-import { AuthProvider, useAuth } from '../context/AuthContext';
+import { useAuth } from '../context/AuthContext';
 import SkateText from "./SkateText";
 import {useNavigation} from "@react-navigation/native";
 
@@ -23,19 +21,34 @@ function Account() {
     const [reload, setReload] = useState(false);
     const [accountData, setAccountData] = useState({});
     const [balance, setBalance] = useState(0);
-
-    const products = [
-        { title: "10 Freestyle Sessions ($115)", link: ""},
-        { title: "30 Freestyle Sessions ($265)", link: ""},
-        { title: "50 Freestyle Sessions ($405)", link: ""},
-        { title: "Monthly Unlimited Freestyle Sessions ($400)", link: ""},
-        { title: "Freestyle Walk On ($15)", link: ""}
-    ];
-
+    const [products, setProducts] = useState([]);
 
     const skaterToken = Utils.getStore('skaterToken');
 
     useEffect(() => {
+
+        if (!skaterToken) return false;
+
+        const fetchProducts = async () => {
+            try {
+                const response = await axios.get(Constants.API_URL + '/api/activeProducts', {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'Authorization': 'Bearer ' + skaterToken
+                    }
+                }); // Replace with your API endpoint
+                const data = response.data;
+                setProducts(data);
+            } catch (err) {
+                setError(err);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchProducts();
+
         const fetchAccountData = async () => {
             try {
                 const response = await axios.get(Constants.API_URL + '/api/summary/account', {
@@ -84,8 +97,26 @@ function Account() {
 
             });
 
-        function gotoPayment() {
-            navigation.navigate("Payment");
+        function gotoPayment(pid) {
+            const createSession = async () => {
+                try {
+                    const response = await axios.get(Constants.API_URL + '/api/stripe/session/' + pid, {
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json',
+                            'Authorization': 'Bearer ' + skaterToken
+                        }
+                    }); // Replace with your API endpoint
+                    const data = response.data;
+                    navigation.navigate("Payment", { paymentLink: data.url });
+                } catch (err) {
+                    setError(err);
+                } finally {
+                    setLoading(false);
+                }
+            };
+
+            createSession();
         }
 
     return (
@@ -99,7 +130,7 @@ function Account() {
                 <ScrollView>
                 { products.map((product, index) => (
                     <View key={index} style={styles.productButton}>
-                        <SkateButton title={product.title} color={global.DARK_COLOR} onPress={gotoPayment} disabled={false} />
+                        <SkateButton title={product.title} color={global.DARK_COLOR} onPress={() => gotoPayment(product.stripe_id)} disabled={false} />
                     </View>
                 ))}
                 </ScrollView>

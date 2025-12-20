@@ -1,11 +1,13 @@
 import React from 'react';
 import { WebView } from 'react-native-webview';
 
-function PaymentScreen() {
+function PaymentScreen({route}) {
+
+    const { paymentLink }  = route.params;
 
     return (
         <WebView
-            source={{uri: 'https://buy.stripe.com/test_6oU00c4NK3E8a4qf1C4ow04'}}
+            source={{uri: paymentLink}}
             style={{flex: 1}}
         />
     );
